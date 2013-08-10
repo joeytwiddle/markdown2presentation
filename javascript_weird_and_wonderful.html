@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>javascript_weird_and_wonderful</title>
+		<style>
+			/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* Generic styles */
+body {
+	background: #f5f5f5;
+  color: #222;
+  font-family: 'Palatino Linotype','Book Antiqua',Palatino,FreeSerif,serif;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6,
+ul, ol,
+p,
+code, pre,
+hr {
+	line-height: 1.5em;
+	margin: 1.5em 0 0.5em 0;
+}
+
+*:first-child {
+	margin-top: 0;
+}
+
+/* Headers */
+h1, h2, h3, h4, h5, h6 {
+	font-weight: bold;
+}
+
+h1 {
+	font-size: 3.5em;
+}
+
+h2 {
+	font-size: 2.5em;
+}
+
+h3 {
+	font-size: 2em;
+}
+
+h4 {
+	font-size: 1.5em
+}
+
+h5 {
+	font-size: 1.2em;
+}
+
+h6 {
+	font-size: 1em;
+}
+
+/* Lists */
+ul, ol {
+	padding-left: 2em;
+}
+
+ul {
+	list-style-type: disc;	
+}
+
+ol {
+	list-style-type: decimal;
+}
+
+/* Code and pre */
+code, pre {
+	font-family: "Bitstream Vera Sans Mono", "Courier", monospace;
+}
+code {
+	background: none repeat scroll 0 0 #F8F8FF;
+  border: 1px solid #DEDEDE;
+  border-radius: 3px 	;
+  padding: 0 0.2em;
+}
+pre {
+	border-left: 5px solid #eee;
+	margin-left: 2em;	
+	padding-left: 1em;
+}
+pre > code {
+	background: transparent;
+	border: none;
+	padding: 0;
+}
+
+/* Links */
+a {
+  color: #261A3B;
+}
+
+a:visited {
+  color: #261A3B;
+}
+
+/* Inlines */
+strong {
+	font-weight: bold;
+}
+
+em {
+	font-style: italic;
+}
+
+/* Container */
+.container {
+	background: #FFF;
+	padding: 30px 50px;
+	margin: 0 auto;
+	width: 850px;
+}
+
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<p><style type="text/css">
+  pre , code {
+    background-color: #111111;
+    color: white;
+    font-weight: bold;
+    white-space: pre-wrap;
+  }
+</style></p>
+
+<h1>Javascript</h1>
+
+<p>Why is Javascript great?</p>
+
+<ul>
+<li>Because all browsers have it installed.  It will run on anyone's computer, without them having to install anything.</li>
+</ul>
+
+<p>Why does Javascript suck?</p>
+
+<ul>
+<li>No static typing.  No interfaces.</li>
+<li>No compile stage means errors are not found until the program is running and the broken line is reached.</li>
+</ul>
+
+<h1>Javascript beginner?</h1>
+
+<p>Use the console.  Use bookmarklets.</p>
+
+<p>Get into Javascript with userscripting!</p>
+
+<ul>
+<li>Chrome users: install TamperMonkey</li>
+<li><p>Firefox users: Install TamperMonkey or Greasemonkey</p></li>
+<li><p>Visit: userscripts.org</p></li>
+</ul>
+
+<h2>Why I don't recommend bookmarklets:</h2>
+
+<p><code>
+javascript:if(document.styleSheets.length&gt;0){css=!document.styleSheets[0].disabled;for(var%20i=0;i&lt;document.styleSheets.length;i++)%20document.styleSheets[i].disabled=css;};void(css=true);
+</code></p>
+
+<ul>
+<li>They look horrible once they are in your bookmarks.</li>
+<li>Getting them into and out of your bookmarks is difficult.</li>
+<li>Embedding them in a web page is problematic (cannot use <code>'</code> or <code>"</code>).</li>
+</ul>
+
+<h2>A bookmarklet being useful</h2>
+
+<p><code>
+&lt;A href='javascript:(function(){
+  var script = document.createElement("script");
+  script.src = "http://code.jquery.com/jquery-1.10.2.min.js";
+  document.body.appendChild(script);
+  script.onload = function(){
+    $("pre").each(function(){
+      var $pre = $(this);
+      $pre[0].contentEditable = true;
+      var $runButton = $("&lt;button&gt;Run&lt;/button&gt;");
+      $runButton.insertAfter($pre);
+      $("&lt;p/&gt;").insertAfter($runButton);
+      $runButton.click(function(){
+        var output = "";
+        console.log = function(){
+          output += Array.prototype.slice.call(arguments,0).join(" ") + "\n";
+        };
+        var code = $pre.text();
+        /* alert("Evaluating: "+code); */
+        /* eval(code); */
+        var fn = new Function(code);
+        /* alert("Evaluating: "+fn); */
+        fn();
+        setTimeout(function(){
+          if (output.length &gt; 0) {
+            alert(output);
+          }
+        },3000);
+      });
+    });
+  };
+})(); void(0);'&gt;Make PREs runnable&lt;/A&gt;
+</code></p>
+
+<p><A href='javascript:(function(){
+  var script = document.createElement("script");
+  script.src = "http://code.jquery.com/jquery-1.7.1.js";
+  document.body.appendChild(script);
+  script.onload = function(){
+    $("pre").each(function(){
+      var $pre = $(this);
+      $pre.click(function(){
+        $pre.attr("contentEditable",true);
+      });
+      var $runButton = $("<button>Run</button>");
+      $runButton.insertAfter($pre);
+      $("<p/>").insertAfter($runButton);
+      $runButton.click(function(){
+        var output = "";
+        console.log = function(){
+          output += Array.prototype.slice.call(arguments,0).join(" ") + "\n";
+        };
+        var code = $pre.text();
+        /* alert("Evaluating: "+code); */
+        /* eval(code); */
+        var fn = new Function(code);
+        /* alert("Evaluating: "+fn); */
+        fn();
+        setTimeout(function(){
+          if (output.length > 0) {
+            alert(output);
+          }
+        },3000);
+      });
+    });
+  };
+})(); void(0);'>Make PREs runnable</A></p>
+
+<h1>How to annoy/confuse/terrify your workmates</h1>
+
+<ul>
+<li>Switch to a tab they aren't using.</li>
+<li>Hit F12 to bring up the Javascript console.</li>
+<li>Set up a message to appear in 15 minutes:</li>
+</ul>
+
+<p><code>javascript
+    setTimeout( function(){ alert("YoU hAve bEeN hAxx0rreD bY eCmaNinJa!"); }, 1000*60*15 );
+</code></p>
+
+<ul>
+<li>Switch back to the tag they were on.</li>
+<li>Whistle noncholantly while you walk away from their PC.</li>
+</ul>
+
+<h1>Terminology</h1>
+
+<pre><code>// Statements:
+x = 20;                  // An assignment
+delete browsers.ie6;
+alert("HI MUM!");        // A function call
+
+// Declaration:
+var myFunc;
+
+// Definition:
+function myFunc() {
+  return "foo";
+}
+
+// Expressions:
+y - 12
+Math.min(16, age)
+"You have " + player.health + " health."
+x
+
+// Array literal:
+var primes = [2, 3, 5, 7, 11];
+
+// Object literal:
+var animal = {
+  name: "cheetah",
+  speed: 40.0
+};
+
+// Building an object by assigning properties:
+var animal = {};
+animal.name = "cheetah";     // String literal
+animal["speed"] = 40.0;      // Number literal
+</code></pre>
+
+<h1>Injecting setTimeout</h1>
+
+<pre><code>var realSetTimeout = window.setTimeout;
+window.setTimeout = function(){
+    console.log("setTimeout was called with arguments:",arguments);
+    return realSetTimeout.apply(this,arguments);
+};
+</code></pre>
+
+<h1>Wrapping $</h1>
+
+<ul>
+<li>using Function.prototype.apply</li>
+</ul>
+
+<p><code>
+    var real$ = $;
+    $ = function(){
+        console.log("$ was called with arguments:",arguments);
+        return real$.apply(this,arguments);
+    };
+</code></p>
+
+<h1>The for loop async gotcha</h1>
+
+<h2>or "why .forEach is awesome"</h2>
+
+<pre><code>// I want to print out all these names, in 2 seconds time
+window.names = [ "Sam", "Fred", "David", "Mark" ];
+
+// This does not work.  Why?
+for (var i=0;i&lt;names.length;i++) {
+  var name = names[i];
+  setTimeout(function(){
+    console.log(names[i]);
+    console.log(name);
+  }, 2000);
+}
+</code></pre>
+
+<p>.</p>
+
+<pre><code>// This works fine:
+names.forEach(function(name,i){
+  setTimeout(function(){
+    console.log(names[i]);
+    console.log(name);
+  }, 2000);
+});
+</code></pre>
+
+<p>Scopes and closure.</p>
+
+<p><code>
+// An alternative
+for (var i=0;i&lt;names.length;i++) {
+  var name = names[i];
+  function setupTimer(name,i) {
+    setTimeout(function(){
+      console.log(names[i]);
+      console.log(name);
+    }, 2000);
+  }();
+}
+</code></p>
+
+<p><code>
+// Another alternative
+for (var i=0;i&lt;names.length;i++) {
+  var name = names[i];
+  setTimeout(function(name,i){
+    console.log(names[i]);
+    console.log(name);
+  }.bind(null,name,i), 2000);
+}
+</code></p>
+
+<h1>Animation in Javascript</h1>
+
+<pre><code>// Bad:
+
+function animate(elem, prop, startVal, endVal, duration) {
+  var valNow = startVal;
+  function doFrame(){
+    valNow += (endVal - startVal) / duration * 1000 / 60;
+    elem[prop] = valNow;
+    if (valNow != endVal) {
+      setTimeout(doFrame,1000/60);
+    }
+  }
+  doFrame();
+}
+
+// Fixed steps might *not* run at fixed time intervals!
+
+
+// Good:
+
+function animate(elem, prop, startVal, endVal, duration) {
+  var startTime = new Date().getTime();
+  function doFrame(){
+    var timeNow = new Date().getTime();
+    var t = (timeNow - startTime) / duration;
+    if (t &gt; 1) {
+      t = 1;
+    }
+    var valNow = startVal + (endVal - startVal) * t;
+    elem[prop] = valNow;
+    if (t &lt; 1) {
+      setTimeout(doFrame,1000/60);
+    }
+  }
+  doFrame();
+}
+
+// Base position on time, always in the right place.
+</code></pre>
+
+<h1>Using &amp;&amp; instead of if</h1>
+
+<pre><code>if (myCat.isHungry) {
+  feed(myCat);
+}
+
+myCat.isHungry &amp;&amp; feed(myCat);
+</code></pre>
+
+<h2>When does it not work?</h2>
+
+<pre><code>weCanSkipTheRest &amp;&amp; return;
+</code></pre>
+
+<p>Because return is a statement, not an expression.</p>
+
+<ul>
+<li>Job interviews</li>
+</ul>
+
+<p>Because employers like readable code, so they can replace you later.</p>
+
+<h1>Godel, Kleene and Turing</h1>
+
+<h2>and Why Javascript is terrible</h2>
+
+<p>Godel's incompleteness theorems blah blah maths.</p>
+
+<p>Alan Turing (who was British, not Italian) produced a sad answer to the "halting problem":</p>
+
+<p>We cannot prove, for all computer programs, whether the program will halt, or run forever.</p>
+
+<p>(This seems intuitively true.  If our program is performing a complex calculation that takes time, then there is no shortcut that allows us to see the result, without performing all the calculations required.  So the content of the final alert box is unknowable, until we actually run the program to completion.)</p>
+
+<p>And things get even worse with Javascript.</p>
+
+<p>"Find all calls to MyLib.suckyLookup in my program."</p>
+
+<pre><code>var x = "suckyL";
+var y = "OOKUP".toLowerCase();
+
+var fn = MyLib[x+y];
+
+fn();
+</code></pre>
+
+<p>Javascript is agile, but less friendly for long-term maintenance.</p>
+
+<p>Fortunately with Java(tm)'s reflection API, he can suck too!</p>
+
+<h1>Refactoring out common patterns</h1>
+
+<p>Functions are "first-class" objects.  They can be assigned to variables and passed around.
+Second-order functions are functions which operate on other functions.  Wanna see some?</p>
+
+<h2>once</h2>
+
+<pre><code>function once(fn) {
+
+  var done = false;
+
+  return function(){
+    if (!done) {
+      fn();
+      done = true;
+    }
+  };
+
+}
+</code></pre>
+
+<h2>The cache pattern</h2>
+
+<pre><code>function cached(fn) {
+  var cache = {};
+  return function(arg) {
+    return (cache[arg] = cache[arg] || fn(arg));   // We don't use if or else any more :P
+  };
+}
+
+    // That one-liner is a shortcut for:
+    if (cache[arg]) {
+      return cache[arg];
+    } else {
+      cache[arg] = fn(arg);
+      return cache[arg];
+    }
+
+function slowComputation(arg){...}
+
+slowComputation("foo"); // takes a long time
+slowComputation("foo"); // takes a long time
+slowComputation("foo"); // takes a long time
+
+var slowComputationCached = cached(slowComputation);
+
+slowComputationCached("foo"); // takes a long time
+slowComputationCached("foo"); // returns immediately :D
+slowComputationCached("foo"); // returns immediately :D
+</code></pre>
+
+<p>Limitations: Single argument (and must be stringifiable).  Ignores caching of falsy results!</p>
+
+<h2>callbackOrFallback</h2>
+
+<p>Callbacks: If a process will take time to complete (it is asynchronous), then your code should NOT "wait" for the response.  Instead it should construct a "callback function", and offer that to be called when the operation has completed.  Thanks to closure in JS scoping, when your function is called, it will still be able to see all the variables of the functions above/around it.</p>
+
+<pre><code>// Similar to the once pattern (but we can not re-use it, because either of the two functions can set doneCallback)
+
+function callbackOrFallback(callback, fallback) {
+
+  var doneCallback = false;
+
+  var myFallback = function(){
+    if (doneCallback) {
+      // callback already happened; good - we don't need to fallback
+    } else {
+      doneCallback = true;
+      fallback.apply(this,arguments);
+    }
+  }
+
+  var myCallback = function(){
+    if (doneCallback) {
+      console.warn("Oh no, fallback happened before callback!  NOT calling the callback.");
+    } else {
+      doneCallback = true;
+      callback.apply(this,arguments);
+    }
+  });
+
+  setTimeout(myFallback, 30*1000);    // myFallback will be called after 30 seconds
+
+  return myCallback;
+
+}
+</code></pre>
+
+<h1>Using bind</h1>
+
+<pre><code>setTimeout( moveit(id,newxpos,timetotake), 1000 );
+
+setTimeout( "moveit(id,newxpos,timetotake);", 1000 );
+
+setTimeout( function(){ moveit(id,newxpos,timetotake); }, 1000 );
+
+setTimeout( moveit.bind(null,id,newxpos,timetotake), 1000 );
+
+
+myFunc.call(null, arg1, arg2);
+
+// could be written
+
+myFunc.bind(null, arg1, arg2)();
+
+
+// Alternatively, whenever you see the pattern:
+
+var x = function(){ sam.callHenry("foo","bar"); };
+
+// You can simplify it to:
+
+var x = callHenry.bind(sam,"foo","bar");
+</code></pre>
+
+<!--
+for (var prop in window) { console.log(prop + ": " + window.hasOwnProperty(prop)); }
+-->
+
+<h1>Promise vs callback</h1>
+
+<pre><code>function doLater(fn) {
+  // Simulated async
+  setTimeout(fn,0);
+}
+
+function add_callback(x,y,callback) {
+  doLater(function(){ callback(x+y); });
+}
+
+function add_promise(x,y) {
+  var onSuccess = null;
+  doLater( function(){ onSuccess(x+y); });
+  return {
+    then: function(_callback) {
+      onSuccess = _callback;
+    }
+  };
+}
+
+function logit(r) {
+  console.log(r);
+}
+
+add_callback(4,5,logit);
+
+add_promise(4,5).
+  then(logit);
+
+add_promise(4,5)
+.then(logit);
+</code></pre>
+
+<h1>Partial application</h1>
+
+<pre><code>&lt;shesek_&gt; usually for performance I just make the functions partial to begin with, I don't use `pap` that often... e.g. `searchByField = (field) -&gt; (value) -&gt; (object) -&gt; object[field] is value; searchByName = searchByField 'name'; [{name:'joe'}, {name:'bob'}].filter searchByName 'bob'`
+</code></pre>
+
+<p>Let's Javascriptify that:</p>
+
+<pre><code>function matchByField(field) {
+  return function(value) {
+    return function(object) {
+      return object[field] === value;
+    };
+  };
+}
+
+var db = [{name:"sam",age:20}, {name:"fred",age:30}, {name:"dave",age:40}];
+
+// Clear usage:
+console.log( matchByField("name")("sam")(db[0]) );
+console.log( matchByField("name")("sam")(db[1]) );
+
+// Funky usage:
+var matchByName = matchByField("name");
+var results = db.filter( matchByName("fred") );
+console.log(results);
+</code></pre>
+
+<p>See: ./prefixify.js</p>
+
+<h1>Progressive Enhancement</h1>
+
+<ul>
+<li><p>Make the page work without Javascript.</p></li>
+<li><p>If Javascript is present, add the dynamic Javascript features over the top!</p></li>
+</ul>
+
+<p>For example:</p>
+
+<pre><code>&lt;a href="/views/monkey.html" class='.showMonkey'&gt;Show me the monkey&lt;/a&gt;
+
+...
+
+&lt;script&gt;
+  $('.showMonkey').click(function(event){
+    displayMonkeyPopup();
+    event.preventDefault();     // Do not follow the link! (fails in old IE)
+    return false;             // Do not follow the link! (works everywhere)
+  });
+</code></pre>
+
+<p>This applies to other technologies which may or not be present in the browser.</p>
+
+<ol>
+<li>Make it work without the technology (old school)</li>
+<li>If the technology is present, add the new way and disable the traditional way.</li>
+</ol>
+
+<p>Modernizr can help to check which technologies are available in the browser.</p>
+
+<h1>document.onready / $(document).ready pros and cons</h1>
+
+<p>Pros:</p>
+
+<p>Waits for all the stuff to be loaded.
+  All the elements are there when you want to bind event handlers to them.</p>
+
+<p>Cons:</p>
+
+<p>Waits for all the stuff to be loaded.
+  Until <em>all</em> the elements are there, <em>none</em> of them will have event handlers bound to them!</p>
+
+<p>The first way:</p>
+
+<pre><code>&lt;script&gt;
+  $('document').ready -&gt;
+    $('.myMagicLinks').on('click', doMagic)
+
+... page content ...
+</code></pre>
+
+<p>Is basically equivalent to waiting until the end:</p>
+
+<pre><code>... page content ...
+
+&lt;script&gt;
+  $('.myMagicLinks').on('click', doMagic)
+</code></pre>
+
+<p>Users with slow connections may be displaying the top 60% of the page, but impatient so clicking anyway!</p>
+
+<p>But how can we bind events to things that are not there yet?!  Not so hard...</p>
+
+<pre><code>&lt;script&gt;
+  $('body').on('click', '.myMagicLinks', doMagic)
+
+... page content ...
+</code></pre>
+
+<p>The click event listener is bound to the 'body' element before any page content is loaded.  But it only <em>fires</em> the event handler function if the clicked element matches the selector <code>.myMagicLinks</code>.</p>
+
+<p>(You don't really need this before <em>all</em> the content, just before any myMagicLinks.)</p>
+
+<p>Do you even want to force this early loading of event handlers?</p>
+
+<ul>
+<li>Without event handlers is fine, if your site has progressive enhancement (will do something sensible anyway).</li>
+<li>Using event handlers may fail, if the handler is loaded early, but requires something later in the page be present!</li>
+</ul>
+
+<p>For pages with non-huge amounts of content, you will rarely see bugs emerging from this.  A second click may work if the first one failed.</p>
+
+<h1>Magic things: arguments</h1>
+
+<h1>Magic things: debugger</h1>
+
+<h1>Magic things: __proto__</h1>
+
+<h1>Magic things: constructor</h1>
+
+<!-- Finally -->
+
+<script src='jquery-1.10.2.min.js'></script>
+
+<script src='replace_codes_with_pres.js'></script>
+
+<script src='group_into_slides.js'></script>
+
+<script src='reusable_slider.js'></script>
+
+<p><link rel="stylesheet" href='cube_slider.css'></link></p>
+
+<script src='cube_slider.js'></script>
+		</div>
+
+		<script></script>
+	</body>
+</html>
