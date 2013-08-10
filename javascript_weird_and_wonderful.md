@@ -10,20 +10,22 @@
 
 # Javascript
 
-Why is Javascript great?
+## Why is Javascript great?
 
 - Because all browsers have it installed.  It will run on anyone's computer, without them having to install anything.
 
-Why does Javascript suck?
+## Why does Javascript suck?
 
 - No static typing.  No interfaces.
 - No compile stage means errors are not found until the program is running and the broken line is reached.
 
 # Javascript beginner?
 
-Use the console.  Use bookmarklets.
+## Use the console
 
-Get into Javascript with userscripting!
+## Use bookmarklets
+
+## Try userscripting
 
 - Chrome users: install TamperMonkey
 - Firefox users: Install TamperMonkey or Greasemonkey

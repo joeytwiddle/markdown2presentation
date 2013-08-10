@@ -5,65 +5,51 @@ var pointingRight = 'translateZ(-'+fiftyPercent+') rotateY(+90deg) translateZ(+'
 var  pointingLeft = 'translateZ(-'+fiftyPercent+') rotateY(-90deg) translateZ(+'+fiftyPercent+')';
 var pointingFront = 'translateZ(-'+fiftyPercent+') rotateY(0deg) translateZ(+'+fiftyPercent+')';
 
-var superInit = Slider.init;
 Slider.init = function() {
-  superInit();
-  //Slider.allSlides.show();
+
   Slider.allSlides.css({
+    opacity: 0,
     transform: pointingRight,
     transition: 'all 0s'
   });
+
   Slider.currentSlide.css({
+    opacity: 1.0,
     transform: pointingFront,
     transition: 'all 0s'
   });
-  //setTimeout(function() {
-    //Slider.allSlides.hide();
-  //},10);
+
 };
 
 Slider.animateSlideNext = function(currentSlide, nextSlide) {
 
-  //nextSlide.show();
-
-  /*
-  nextSlide.css({
-    transform: pointingRight,
-    transition: 'all 0s'
+  currentSlide.css({
+    opacity: 0,
+    transform: pointingLeft,
+    transition: 'all 1s'
   });
-  */
 
-  setTimeout(function(){
-    currentSlide.css({
-      transform: pointingLeft,
-      transition: 'all 1s'
-    });
-    nextSlide.css({
-      transform: pointingFront,
-      transition: 'all 1s'
-    });
-    setTimeout(function(){
-      currentSlide.hide();
-    },1000);
-  },10);
+  nextSlide.css({
+    opacity: 1.0,
+    transform: pointingFront,
+    transition: 'all 1s'
+  });
 
 };
 
 Slider.animateSlidePrev = function(currentSlide, prevSlide) {
 
-  setTimeout(function(){
-    currentSlide.css({
-      transform: pointingRight,
-      transition: 'all 1s'
-    });
-    prevSlide.css({
-      transform: pointingFront,
-      transition: 'all 1s'
-    });
-    setTimeout(function(){
-      currentSlide.hide();
-    },1000);
-  },10);
+  currentSlide.css({
+    opacity: 0,
+    transform: pointingRight,
+    transition: 'all 1s'
+  });
+
+  prevSlide.css({
+    opacity: 1.0,
+    transform: pointingFront,
+    transition: 'all 1s'
+  });
 
 };
 

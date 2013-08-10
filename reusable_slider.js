@@ -4,21 +4,8 @@ window.Slider = {
   currentSlide: null,
 
   init: function() {
-    Slider.allSlides = $(".slide");
-    Slider.currentSlide = Slider.allSlides.first();
     Slider.allSlides.hide();
     Slider.currentSlide.show();
-
-    $("body").keydown(function(event){
-      //console.log("keypress event:",event);
-      if (event.keyCode == 39) {
-        event.preventDefault();
-        Slider.slideRight();
-      } else if (event.keyCode == 37) {
-        event.preventDefault();
-        Slider.slideLeft();
-      }
-    });
   },
 
   // These two don't really need to be exposed
@@ -26,7 +13,6 @@ window.Slider = {
   slideRight: function() {
     var nextSlide = Slider.currentSlide.next();
     if (nextSlide.length) {
-      nextSlide.show();
       Slider.animateSlideNext(Slider.currentSlide,nextSlide);
       Slider.currentSlide = nextSlide;
     }
@@ -35,7 +21,6 @@ window.Slider = {
   slideLeft: function () {
     var prevSlide = Slider.currentSlide.prev();
     if (prevSlide.length) {
-      prevSlide.show();
       Slider.animateSlidePrev(Slider.currentSlide,prevSlide);
       Slider.currentSlide = prevSlide;
     }
@@ -44,15 +29,33 @@ window.Slider = {
   // These two are meant to be overridden
 
   animateSlideNext: function(currentSlide,nextSlide) {
+    nextSlide.show();
     currentSlide.hide();
   },
 
   animateSlidePrev: function(currentSlide,prevSlide) {
+    prevSlide.show();
     currentSlide.hide();
   }
 
 };
 
 $(document).ready(function() {
+
+  Slider.allSlides = $(".slide");
+  Slider.currentSlide = Slider.allSlides.first();
+
   Slider.init();
+
+  $("body").keydown(function(event){
+    //console.log("keypress event:",event);
+    if (event.keyCode == 39) {
+      event.preventDefault();
+      Slider.slideRight();
+    } else if (event.keyCode == 37) {
+      event.preventDefault();
+      Slider.slideLeft();
+    }
+  });
+
 });
