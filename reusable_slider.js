@@ -1,45 +1,3 @@
-window.Slider = {
-
-     allSlides: null,
-  currentSlide: null,
-
-  init: function() {
-    Slider.allSlides.hide();
-    Slider.currentSlide.show();
-  },
-
-  // These two don't really need to be exposed
-
-  slideRight: function() {
-    var nextSlide = Slider.currentSlide.next();
-    if (nextSlide.length) {
-      Slider.animateSlideNext(Slider.currentSlide,nextSlide);
-      Slider.currentSlide = nextSlide;
-    }
-  },
-
-  slideLeft: function () {
-    var prevSlide = Slider.currentSlide.prev();
-    if (prevSlide.length) {
-      Slider.animateSlidePrev(Slider.currentSlide,prevSlide);
-      Slider.currentSlide = prevSlide;
-    }
-  },
-
-  // These two are meant to be overridden
-
-  animateSlideNext: function(currentSlide,nextSlide) {
-    nextSlide.show();
-    currentSlide.hide();
-  },
-
-  animateSlidePrev: function(currentSlide,prevSlide) {
-    prevSlide.show();
-    currentSlide.hide();
-  }
-
-};
-
 $(document).ready(function() {
 
   Slider.allSlides = $(".slide");
@@ -59,3 +17,42 @@ $(document).ready(function() {
   });
 
 });
+
+window.Slider = {
+
+  init: function() {
+    this.allSlides.hide();
+    this.currentSlide.show();
+  },
+
+  // These two don't really need to be exposed
+
+  slideRight: function() {
+    var nextSlide = this.currentSlide.next();
+    if (nextSlide.length) {
+      this.animateSlideNext(this.currentSlide,nextSlide);
+      this.currentSlide = nextSlide;
+    }
+  },
+
+  slideLeft: function () {
+    var prevSlide = this.currentSlide.prev();
+    if (prevSlide.length) {
+      this.animateSlidePrev(this.currentSlide,prevSlide);
+      this.currentSlide = prevSlide;
+    }
+  },
+
+  // These two are meant to be overridden
+
+  animateSlideNext: function(currentSlide,nextSlide) {
+    nextSlide.show();
+    currentSlide.hide();
+  },
+
+  animateSlidePrev: function(currentSlide,prevSlide) {
+    prevSlide.show();
+    currentSlide.hide();
+  }
+
+};
