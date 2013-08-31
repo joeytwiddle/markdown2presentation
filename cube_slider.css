@@ -8,10 +8,13 @@
      -moz-transform-style: preserve-3d;
           transform-style: preserve-3d;
 
+  height: 90%;
 }
 
 .slide {
   position: fixed;
   top: 0px;
+  height: 100%;
+  overflow: auto;
 }
 
