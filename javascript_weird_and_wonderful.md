@@ -1,5 +1,13 @@
 <link rel="stylesheet" href='markdown_tweaks.css'></link>
 
+<style type="text/css">
+  html, body {
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(hsl(200,60%,50%),hsl(180,60%,50%));
+  }
+</style>
+
 # Javascript
 
 ## Why is Javascript great?
@@ -609,6 +617,7 @@ For pages with non-huge amounts of content, you will rarely see bugs emerging fr
 
 
 <!-- Finally -->
+<script src='prefixfree.min.js'></script>
 <script src='jquery-1.10.2.min.js'></script>
 <script src='replace_codes_with_pres.js'></script>
 <script src='group_into_slides.js'></script>
