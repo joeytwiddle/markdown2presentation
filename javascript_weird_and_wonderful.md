@@ -4,6 +4,7 @@
   html, body {
     width: 100%;
     height: 100%;
+    box-sizing: border-box;
     background-image: radial-gradient(hsl(200,60%,50%),hsl(180,60%,50%));
   }
 </style>
