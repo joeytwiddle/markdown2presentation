@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>animation_options_in_html5</title>
+		<style>
+			/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* Generic styles */
+body {
+	background: #f5f5f5;
+  color: #222;
+  font-family: 'Palatino Linotype','Book Antiqua',Palatino,FreeSerif,serif;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6,
+ul, ol,
+p,
+code, pre,
+hr {
+	line-height: 1.5em;
+	margin: 1.5em 0 0.5em 0;
+}
+
+*:first-child {
+	margin-top: 0;
+}
+
+/* Headers */
+h1, h2, h3, h4, h5, h6 {
+	font-weight: bold;
+}
+
+h1 {
+	font-size: 3.5em;
+}
+
+h2 {
+	font-size: 2.5em;
+}
+
+h3 {
+	font-size: 2em;
+}
+
+h4 {
+	font-size: 1.5em
+}
+
+h5 {
+	font-size: 1.2em;
+}
+
+h6 {
+	font-size: 1em;
+}
+
+/* Lists */
+ul, ol {
+	padding-left: 2em;
+}
+
+ul {
+	list-style-type: disc;	
+}
+
+ol {
+	list-style-type: decimal;
+}
+
+/* Code and pre */
+code, pre {
+	font-family: "Bitstream Vera Sans Mono", "Courier", monospace;
+}
+code {
+	background: none repeat scroll 0 0 #F8F8FF;
+  border: 1px solid #DEDEDE;
+  border-radius: 3px 	;
+  padding: 0 0.2em;
+}
+pre {
+	border-left: 5px solid #eee;
+	margin-left: 2em;	
+	padding-left: 1em;
+}
+pre > code {
+	background: transparent;
+	border: none;
+	padding: 0;
+}
+
+/* Links */
+a {
+  color: #261A3B;
+}
+
+a:visited {
+  color: #261A3B;
+}
+
+/* Inlines */
+strong {
+	font-weight: bold;
+}
+
+em {
+	font-style: italic;
+}
+
+/* Container */
+.container {
+	background: #FFF;
+	padding: 30px 50px;
+	margin: 0 auto;
+	width: 850px;
+}
+
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<p><link rel="stylesheet" href='markdown_tweaks.css'></link></p>
+
+<p><style type="text/css">
+  html, body {
+    width: 100%;
+    height: 100%;
+    background-image: -webkit-radial-gradient(top,farthest-side circle,hsl(30,80%,50%),hsl(0,80%,50%));
+    background-image: radial-gradient(top,farthest-side circle,hsl(30,80%,50%),hsl(0,80%,50%));
+  }
+</style></p>
+
+<h1>Animation options in HTML5</h1>
+
+<h2>Why?</h2>
+
+<ul>
+<li>Catches attention</li>
+<li>Keeps user entertained</li>
+<li>Makes other people nearby curious!</li>
+<li>Needed for transitions, games</li>
+</ul>
+
+<h2>Why not?</h2>
+
+<p>Some users may experience problems:</p>
+
+<ul>
+<li>Extra processing
+<ul><li>May slow down older PCs</li>
+<li>May use up battery, heat the core, spin the fan</li></ul></li>
+<li>Distracting, annoying (if not done right, but each user has a different threshold)</li>
+</ul>
+
+<p>Those issues can be easily addressed, with a Stop or Pause Animations button!</p>
+
+<p>But these ones cannot:</p>
+
+<ul>
+<li>Browser lacks support for the technology</li>
+<li>Platform lacks performance: runs well on your Mac, but runs terrible on the user's phone</li>
+</ul>
+
+<h1>What are we talking about?</h1>
+
+<h2>Animating standard HTML elements</h2>
+
+<ul>
+<li><code>&lt;div&gt;</code></li>
+<li><code>&lt;img&gt;</code></li>
+<li><code>#text</code></li>
+</ul>
+
+<h2>Animating SVGs</h2>
+
+<ul>
+<li><code>&lt;circle&gt;</code></li>
+<li><code>&lt;triangle&gt;</code></li>
+<li><code>&lt;rect&gt;</code></li>
+<li>Full <code>&lt;svg&gt;</code> imported from Illustrator/Inkscape/svgedit/Piktochart</li>
+</ul>
+
+<h2>Canvas</h2>
+
+<ul>
+<li>Slow in theory, fast in practice!</li>
+</ul>
+
+<h2>WebGL and ... GLshaders?</h2>
+
+<h1>Options</h1>
+
+<p>What technology is available for animation?</p>
+
+<h2>jQuery.animate</h2>
+
+<p>Advantages:</p>
+
+<ul>
+<li>We have used it before</li>
+<li>It works on familiar CSS properties we know and love</li>
+</ul>
+
+<p>Disadvantages:</p>
+
+<ul>
+<li>It <em>only</em> works on CSS properties (not on element attributes).  This is an issue because SVGs are always shaped and often positioned by attributes.</li>
+<li>Does it support <code>-transform</code>?  I don't know!  (TODO)</li>
+</ul>
+
+<h2>TweenMax.js</h2>
+
+<p>Advantages:</p>
+
+<ul>
+<li>Can interpolate </li>
+</ul>
+
+<h2>Raphael</h2>
+
+<h2>prefixfree.js</h2>
+
+<p>Not actually for animation, but worth mentioning.  It lets you write CSS without worrying about vendor prefix.</p>
+
+<pre><code>&lt;script src='prefixfree.min.js'&gt;&lt;/script&gt;
+</code></pre>
+
+<p>Where it works:</p>
+
+<ul>
+<li>CSS files linked in your HTML.  (It inspects them retrospectively using XMLHttpRequest)</li>
+<li>CSS you add to the DOM at runtime (to element style)</li>
+</ul>
+
+<p>Where it doesn't work:</p>
+
+<ul>
+<li>CSS files linked in your HTML while browsing offline (<code>file://</code>).  Because some browsers don't support XHR to the filesystem.  There are ways to enable this (Chrome flags).</li>
+</ul>
+
+<h1>Terminology</h1>
+
+<h2>Interpolation</h2>
+
+<ul>
+<li>Inter = "between"</li>
+<li>Pole = "point"</li>
+</ul>
+
+<h2>Linear interpolation</h2>
+
+<ul>
+<li>Linear means "in a straight line"
+Example: <code>x = C + M * y</code></li>
+<li>but with respect to time, it means "at a constant speed"
+Example: <code>(x,y) = (x0,y0) + t * (u0,v0)</code></li>
+</ul>
+
+<p>When you rotate an object around a circle, the movement is non-linear</p>
+
+<p>When you use easing, the animation speed is non-linear</p>
+
+<h1>Non-linear interpolation with -transform?</h1>
+
+<p>Yes, in time.</p>
+
+<p>But not, in space!</p>
+
+<h2>Easing over time</h2>
+
+<p>You can set the easing <code>-animation-timing-function</code>:</p>
+
+<pre><code>-webkit-animation-timing-function: linear;
+  -moz-transition-timing-function: ease-in-out;
+    -ms-animation-timing-function: ease-in;
+     -o-animation-timing-function: ease-out;
+       -animation-timing-function: cubic-bezier(0.175, 1.120, 0.685, 1.400);
+</code></pre>
+
+<p>or alternatively directly in the transition:</p>
+
+<pre><code>-moz-transition: all 500ms ease-out;
+</code></pre>
+
+<p>See the defaults in action, and a summary of all the features here:</p>
+
+<pre><code>- http://css3.bradshawenterprises.com/transitions/
+</code></pre>
+
+<p>Specifying a Bezier curve gives you quite fine-grained control:</p>
+
+<pre><code>- http://matthewlein.com/ceaser/
+</code></pre>
+
+<h1>Non-linear motion</h1>
+
+<p>The goal:</p>
+
+<ul>
+<li>Move a ball in a parabola (the curve that gravity causes)</li>
+</ul>
+
+<h2>Use rotation to move the ball in an arc?</h2>
+
+<p>Yuck.  An arc looks nothing like a parabola!</p>
+
+<h2>Use bezier curve?</h2>
+
+<p>A Bezier curve can only approximate a parabola, but that is good enough.</p>
+
+<p>Move X linearly.</p>
+
+<p>Move Y in a Bezier curve that <em>looks like</em> a parabola.</p>
+
+<p>Two separate transforms, requires two separate elements.</p>
+
+<p>If we are animating a <code>&lt;circle&gt;</code> then we will need to wrap it in a <code>&lt;g&gt;</code>.  Set the x transform on one and the y transform on the other.</p>
+
+<!-- Finally -->
+
+<script src='prefixfree.min.js'></script>
+
+<script src='jquery-1.10.2.min.js'></script>
+
+<script src='replace_codes_with_pres.js'></script>
+
+<script src='group_into_slides.js'></script>
+
+<script src='reusable_slider.js'></script>
+
+<p><link rel="stylesheet" href='cube_slider.css'></link></p>
+
+<script src='cube_slider.js'></script>
+		</div>
+
+		<script></script>
+	</body>
+</html>
