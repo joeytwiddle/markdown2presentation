@@ -169,14 +169,7 @@ em {
 	</head>
 	<body>
 		<div class="container">
-			<p><style type="text/css">
-  pre , code {
-    background-color: #111111;
-    color: white;
-    font-weight: bold;
-    white-space: pre-wrap;
-  }
-</style></p>
+			<p><link rel="stylesheet" href='markdown_tweaks.css'></link></p>
 
 <h1>Javascript</h1>
 
@@ -342,7 +335,7 @@ animal.name = "cheetah";     // String literal
 animal["speed"] = 40.0;      // Number literal
 </code></pre>
 
-<h1>Injecting setTimeout</h1>
+<h1>Wrapping setTimeout</h1>
 
 <pre><code>var realSetTimeout = window.setTimeout;
 window.setTimeout = function(){
@@ -353,17 +346,26 @@ window.setTimeout = function(){
 
 <h1>Wrapping $</h1>
 
-<ul>
-<li>using Function.prototype.apply</li>
-</ul>
+<p>An example of using <code>Function.prototype.apply</code></p>
 
-<p><code>
-    var real$ = $;
-    $ = function(){
-        console.log("$ was called with arguments:",arguments);
-        return real$.apply(this,arguments);
-    };
-</code></p>
+<pre><code>var realJQuery = window.$;
+
+function fakeJQuery() {
+  var result = realJQuery.apply(realJQuery,arguments);
+  if (result.length == 0) {
+    console.warn("JQuery returned ZERO results for ",arguments);
+  }
+  return result;
+}
+
+// Make sure things like $.ajax() still appear as expected.
+for (var k in realJQuery) {
+  fakeJQuery[k] = realJQuery[k];
+}
+
+window.$ = fakeJQuery;
+window.jQuery = fakeJQuery;
+</code></pre>
 
 <h1>The for loop async gotcha</h1>
 
@@ -600,13 +602,15 @@ function callbackOrFallback(callback, fallback) {
 
 <h1>Using bind</h1>
 
-<pre><code>setTimeout( moveit(id,newxpos,timetotake), 1000 );
+<p>You can call <code>&lt;function&gt;.bind</code> to provide arguments to a function without calling it yet.  You get back a new function which when called, will call the original function with the provided arguments.</p>
 
-setTimeout( "moveit(id,newxpos,timetotake);", 1000 );
+<pre><code>setTimeout( moveit(id,newxpos,timetotake), 1000 );                  // Wrong
 
-setTimeout( function(){ moveit(id,newxpos,timetotake); }, 1000 );
+setTimeout( "moveit(id,newxpos,timetotake);", 1000 );               // Dirty
 
-setTimeout( moveit.bind(null,id,newxpos,timetotake), 1000 );
+setTimeout( function(){ moveit(id,newxpos,timetotake); }, 1000 );   // OK
+
+setTimeout( moveit.bind(null,id,newxpos,timetotake), 1000 );        // Nice
 
 
 myFunc.call(null, arg1, arg2);

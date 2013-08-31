@@ -1,12 +1,4 @@
-
-<style type="text/css">
-  pre , code {
-    background-color: #111111;
-    color: white;
-    font-weight: bold;
-    white-space: pre-wrap;
-  }
-</style>
+<link rel="stylesheet" href='markdown_tweaks.css'></link>
 
 # Javascript
 
@@ -167,7 +159,7 @@ javascript:if(document.styleSheets.length>0){css=!document.styleSheets[0].disabl
 
 
 
-# Injecting setTimeout
+# Wrapping setTimeout
 
     var realSetTimeout = window.setTimeout;
     window.setTimeout = function(){
@@ -177,15 +169,25 @@ javascript:if(document.styleSheets.length>0){css=!document.styleSheets[0].disabl
 
 # Wrapping $
 
-  - using Function.prototype.apply
+An example of using `Function.prototype.apply`
 
-```
-    var real$ = $;
-    $ = function(){
-        console.log("$ was called with arguments:",arguments);
-        return real$.apply(this,arguments);
-    };
-```
+    var realJQuery = window.$;
+
+    function fakeJQuery() {
+      var result = realJQuery.apply(realJQuery,arguments);
+      if (result.length == 0) {
+        console.warn("JQuery returned ZERO results for ",arguments);
+      }
+      return result;
+    }
+
+    // Make sure things like $.ajax() still appear as expected.
+    for (var k in realJQuery) {
+      fakeJQuery[k] = realJQuery[k];
+    }
+
+    window.$ = fakeJQuery;
+    window.jQuery = fakeJQuery;
 
 
 # The for loop async gotcha
@@ -422,13 +424,15 @@ Callbacks: If a process will take time to complete (it is asynchronous), then yo
 
 # Using bind
 
-    setTimeout( moveit(id,newxpos,timetotake), 1000 );
+You can call `<function>.bind` to provide arguments to a function without calling it yet.  You get back a new function which when called, will call the original function with the provided arguments.
 
-    setTimeout( "moveit(id,newxpos,timetotake);", 1000 );
+    setTimeout( moveit(id,newxpos,timetotake), 1000 );                  // Wrong
 
-    setTimeout( function(){ moveit(id,newxpos,timetotake); }, 1000 );
+    setTimeout( "moveit(id,newxpos,timetotake);", 1000 );               // Dirty
 
-    setTimeout( moveit.bind(null,id,newxpos,timetotake), 1000 );
+    setTimeout( function(){ moveit(id,newxpos,timetotake); }, 1000 );   // OK
+
+    setTimeout( moveit.bind(null,id,newxpos,timetotake), 1000 );        // Nice
 
 
     myFunc.call(null, arg1, arg2);
