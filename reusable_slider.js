@@ -28,7 +28,7 @@ window.Slider = {
   // These two don't really need to be exposed
 
   slideRight: function() {
-    var nextSlide = this.currentSlide.next();
+    var nextSlide = this.currentSlide.next(".slide");
     if (nextSlide.length) {
       this.animateSlideNext(this.currentSlide,nextSlide);
       this.currentSlide = nextSlide;
@@ -36,7 +36,7 @@ window.Slider = {
   },
 
   slideLeft: function () {
-    var prevSlide = this.currentSlide.prev();
+    var prevSlide = this.currentSlide.prev(".slide");
     if (prevSlide.length) {
       this.animateSlidePrev(this.currentSlide,prevSlide);
       this.currentSlide = prevSlide;
