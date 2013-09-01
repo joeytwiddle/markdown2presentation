@@ -8,13 +8,27 @@
      -moz-transform-style: preserve-3d;
           transform-style: preserve-3d;
 
-  height: 90%;
+  width: 80%;
+  height: 95%;
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
 }
 
 .slide {
   position: fixed;
   top: 0px;
+  width: 100%;
+  margin: 0% 10%;
   height: 100%;
   overflow: auto;
+}
+
+body {
+  /* In Firefox, we were seeing scrollbars during the animation */
+  /* This didn't prevent them: */
+  /*overflow: none;*/
+  /* This did prevent them: */
+  overflow: hidden;
 }
 
