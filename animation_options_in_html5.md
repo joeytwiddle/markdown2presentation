@@ -6,7 +6,7 @@
     height: 100%;
     box-sizing: border-box;
     background-image: -webkit-radial-gradient(top,farthest-side circle,hsl(30,80%,50%),hsl(0,80%,50%));
-    background-image: radial-gradient(top,farthest-side circle,hsl(30,80%,50%),hsl(0,80%,50%));
+    background-image: radial-gradient(farthest-side circle at top,hsl(30,80%,50%),hsl(0,80%,50%));
   }
 </style>
 
@@ -17,13 +17,13 @@
 ## Why?
 
 - Catches attention
-- Keeps user entertained
+- Keeps users entertained
 - Makes other people nearby curious!
-- Needed for transitions, games
+- Needed for smooth transitions, or games
 
 ## Why not?
 
-Some users may experience problems:
+Some users may experience problems with animation:
 
 - Extra processing
  - May slow down older PCs
@@ -39,13 +39,19 @@ But these ones cannot:
 
 
 
-# What are we talking about?
+# Overview of the alternatives
 
 ## Animating standard HTML elements
 
 - `<div>`
 - `<img>`
 - `#text`
+
+Limited.
+
+## Before canvas there were...
+
+[Triangles](http://www.uselesspickles.com/triangles/demo.html)!
 
 ## Animating SVGs
 
@@ -113,6 +119,33 @@ Where it doesn't work:
 
 
 
+# Getting started
+
+Create `<svg>` elements manually, and add components to them.
+
+Or grab components directly from the DOM.
+
+
+
+# Manipulating a transform
+
+If `myRect` is a `<rect>` element under an `<svg>` then we can move it with:
+
+    myRect.transform.baseVal.getItem(0).setTranslate(newX,newY);
+
+But it will jump to its new location, it won't move smoothly!
+
+
+
+# Animating an element
+
+// TODO: Bring a working example here!
+
+    var $nose = $('#monkey1 .nose');
+    $nose.
+
+
+
 # Terminology
 
 ## Interpolation
@@ -139,6 +172,8 @@ Yes, in time.
 
 But not, in space!
 
+At least, not with CSS `transform`.  You *can* animate CSS properties like `top` and `left` indepdently, but these cannot be applied to individual SVG paths.  (Although if you want to go that way, you can keep each thing you want to animate in a separate SVG.)
+
 ## Easing over time
 
 You can set the easing `-animation-timing-function`:
@@ -155,11 +190,11 @@ or alternatively directly in the transition:
 
 See the defaults in action, and a summary of all the features here:
 
-    - http://css3.bradshawenterprises.com/transitions/
+- [Bradshaw Transitions](http://css3.bradshawenterprises.com/transitions/)
 
 Specifying a Bezier curve gives you quite fine-grained control:
 
-    - http://matthewlein.com/ceaser/
+- [Caesar](http://matthewlein.com/ceaser/)
 
 
 
@@ -167,7 +202,7 @@ Specifying a Bezier curve gives you quite fine-grained control:
 
 The goal:
 
-- Move a ball in a parabola (the curve that gravity causes)
+- Move a ball in a parabola (the curve caused by gravity)
 
 ## Use rotation to move the ball in an arc?
 

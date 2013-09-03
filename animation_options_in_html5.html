@@ -177,7 +177,7 @@ em {
     height: 100%;
     box-sizing: border-box;
     background-image: -webkit-radial-gradient(top,farthest-side circle,hsl(30,80%,50%),hsl(0,80%,50%));
-    background-image: radial-gradient(top,farthest-side circle,hsl(30,80%,50%),hsl(0,80%,50%));
+    background-image: radial-gradient(farthest-side circle at top,hsl(30,80%,50%),hsl(0,80%,50%));
   }
 </style></p>
 
@@ -187,14 +187,14 @@ em {
 
 <ul>
 <li>Catches attention</li>
-<li>Keeps user entertained</li>
+<li>Keeps users entertained</li>
 <li>Makes other people nearby curious!</li>
-<li>Needed for transitions, games</li>
+<li>Needed for smooth transitions, or games</li>
 </ul>
 
 <h2>Why not?</h2>
 
-<p>Some users may experience problems:</p>
+<p>Some users may experience problems with animation:</p>
 
 <ul>
 <li>Extra processing
@@ -212,7 +212,7 @@ em {
 <li>Platform lacks performance: runs well on your Mac, but runs terrible on the user's phone</li>
 </ul>
 
-<h1>What are we talking about?</h1>
+<h1>Overview of the alternatives</h1>
 
 <h2>Animating standard HTML elements</h2>
 
@@ -221,6 +221,12 @@ em {
 <li><code>&lt;img&gt;</code></li>
 <li><code>#text</code></li>
 </ul>
+
+<p>Limited.</p>
+
+<h2>Before canvas there were...</h2>
+
+<p><a href="http://www.uselesspickles.com/triangles/demo.html">Triangles</a>!</p>
 
 <h2>Animating SVGs</h2>
 
@@ -297,6 +303,29 @@ em {
 <li>CSS files linked in your HTML while browsing offline (<code>file://</code>).  Because some browsers don't support XHR to the filesystem.  There are ways to enable this (Chrome flags).</li>
 </ul>
 
+<h1>Getting started</h1>
+
+<p>Create <code>&lt;svg&gt;</code> elements manually, and add components to them.</p>
+
+<p>Or grab components directly from the DOM.</p>
+
+<h1>Manipulating a transform</h1>
+
+<p>If <code>myRect</code> is a <code>&lt;rect&gt;</code> element under an <code>&lt;svg&gt;</code> then we can move it with:</p>
+
+<pre><code>myRect.transform.baseVal.getItem(0).setTranslate(newX,newY);
+</code></pre>
+
+<p>But it will jump to its new location, it won't move smoothly!</p>
+
+<h1>Animating an element</h1>
+
+<p>// TODO: Bring a working example here!</p>
+
+<pre><code>var $nose = $('#monkey1 .nose');
+$nose.
+</code></pre>
+
 <h1>Terminology</h1>
 
 <h2>Interpolation</h2>
@@ -325,6 +354,8 @@ Example: <code>(x,y) = (x0,y0) + t * (u0,v0)</code></li>
 
 <p>But not, in space!</p>
 
+<p>At least, not with CSS <code>transform</code>.  You <em>can</em> animate CSS properties like <code>top</code> and <code>left</code> indepdently, but these cannot be applied to individual SVG paths.  (Although if you want to go that way, you can keep each thing you want to animate in a separate SVG.)</p>
+
 <h2>Easing over time</h2>
 
 <p>You can set the easing <code>-animation-timing-function</code>:</p>
@@ -343,20 +374,22 @@ Example: <code>(x,y) = (x0,y0) + t * (u0,v0)</code></li>
 
 <p>See the defaults in action, and a summary of all the features here:</p>
 
-<pre><code>- http://css3.bradshawenterprises.com/transitions/
-</code></pre>
+<ul>
+<li><a href="http://css3.bradshawenterprises.com/transitions/">Bradshaw Transitions</a></li>
+</ul>
 
 <p>Specifying a Bezier curve gives you quite fine-grained control:</p>
 
-<pre><code>- http://matthewlein.com/ceaser/
-</code></pre>
+<ul>
+<li><a href="http://matthewlein.com/ceaser/">Caesar</a></li>
+</ul>
 
 <h1>Non-linear motion</h1>
 
 <p>The goal:</p>
 
 <ul>
-<li>Move a ball in a parabola (the curve that gravity causes)</li>
+<li>Move a ball in a parabola (the curve caused by gravity)</li>
 </ul>
 
 <h2>Use rotation to move the ball in an arc?</h2>
