@@ -26,7 +26,8 @@
   padding: 0px;
   overflow: auto;
   /* BUG: Firefox applies the padding after applying te left,width rules, and so the slide is shifted to the right; not central.
-   * A workaround for this might be to apply the above rules to a container, and put each padded slide inside its corresponding container.  This would require generating extra container elements in the DOM. */
+   * DONE: A workaround for this might be to apply the above rules to a container, and put each padded slide inside its corresponding container.  This would require generating extra container elements in the DOM.
+   * CONSIDER: Instead of doing that, how about setting right: and bottom: instead of width: and height: ? */
 }
 
 .slide-content {
