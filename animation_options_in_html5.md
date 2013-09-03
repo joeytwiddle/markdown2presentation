@@ -227,7 +227,11 @@ If we are animating a `<circle>` then we will need to wrap it in a `<g>`.  Set t
 <script src='jquery-1.10.2.min.js'></script>
 <script src='replace_codes_with_pres.js'></script>
 <script src='group_into_slides.js'></script>
+<!-- Anything above group_into_slides will end up in a slide; itself in the last one. -->
 <script src='reusable_slider.js'></script>
 <link rel="stylesheet" href='cube_slider.css'></link>
 <script src='cube_slider.js'></script>
+<!-- <div id='dots'></div> -->
+<link rel="stylesheet" href='dotfield.css'></link>
+<script src='dotfield.js'></script>
 
