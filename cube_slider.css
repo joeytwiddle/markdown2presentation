@@ -8,21 +8,29 @@
      -moz-transform-style: preserve-3d;
           transform-style: preserve-3d;
 
-  width: 80%;
+  width: 100%;
   height: 100%;
-  padding: 0px;
   margin: 0px;
+  padding: 0px;
   box-sizing: border-box;
 }
 
 .slide {
   position: fixed;
-  top: 0px;
-  width: 100%;
-  margin: 0% 10%;
-  height: 100%;
+  width: 70%;
+  left:  15%;
+  height: 96%;
+  top:     2%;
+  margin: 0px;
   box-sizing: border-box;
+  padding: 0px;
   overflow: auto;
+  /* BUG: Firefox applies the padding after applying te left,width rules, and so the slide is shifted to the right; not central.
+   * A workaround for this might be to apply the above rules to a container, and put each padded slide inside its corresponding container.  This would require generating extra container elements in the DOM. */
+}
+
+.slide-content {
+  padding: 30px 50px;
 }
 
 body {
