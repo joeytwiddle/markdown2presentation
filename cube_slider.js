@@ -1,9 +1,17 @@
 
-var fiftyPercent = Math.round(window.innerWidth / 2) + 'px';
+var pointingLeft, pointingRight, pointingFront;
 
-var pointingRight = 'translateZ(-'+fiftyPercent+') rotateY(+90deg) translateZ(+'+fiftyPercent+')';
-var  pointingLeft = 'translateZ(-'+fiftyPercent+') rotateY(-90deg) translateZ(+'+fiftyPercent+')';
-var pointingFront = 'translateZ(-'+fiftyPercent+') rotateY(0deg) translateZ(+'+fiftyPercent+')';
+// BUG: OK these values now react when we change the browser size, *but* this only affects new application of the transforms; it doesn't change the existing style settings which have already been applied to elements in the page!
+// It might be neater if we made these into actual named CSS rules, and edited those.
+// Alternatively on recalc, we could do some css work, like in init().
+function recalcTransforms() {
+  var fiftyPercent = Math.round(window.innerWidth / 2) + 'px';
+  pointingRight = 'translateZ(-'+fiftyPercent+') rotateY(+90deg) translateZ(+'+fiftyPercent+')';
+  pointingLeft = 'translateZ(-'+fiftyPercent+') rotateY(-90deg) translateZ(+'+fiftyPercent+')';
+  pointingFront = 'translateZ(-'+fiftyPercent+') rotateY(0deg) translateZ(+'+fiftyPercent+')';
+}
+recalcTransforms();
+$(window).on('resize',recalcTransforms);
 
 Slider.init = function() {
 
