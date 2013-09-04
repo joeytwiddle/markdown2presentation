@@ -4,7 +4,8 @@ $(document).ready(function() {
 
   var namespace = "http://www.w3.org/2000/svg";
 
-  var $dotsContainer = $(document.createElementNS(namespace,"svg"));
+  //var $dotsContainer = $(document.createElementNS(namespace,"svg"));
+  var $dotsContainer = $("<div>");
   //$dotsContainer.attr('id','dots');
   //$dotsContainer.addClass('dots-container');
   //$dotsContainer.css({
@@ -23,10 +24,11 @@ $(document).ready(function() {
     var dotZ = window.innerWidth * (depth - 0.5);
     var hue = 360 * depth;
 
-    var $dot = $(document.createElementNS(namespace,"circle"))
-    .attr("cx",0)
-    .attr("cy",0)
-    .attr("r",dotSize);
+    //var $dot = $(document.createElementNS(namespace,"circle"))
+    //.attr("cx",0)
+    //.attr("cy",0)
+    //.attr("r",dotSize);
+    var $dot = $("<div>(O)</div>");
 
     $dot.css({
       //transform: 'translateX('+dotX+'px) translateY('+dotY+'px) translateZ('+dotZ+'px)'
@@ -79,7 +81,7 @@ $(document).ready(function() {
     dotsData.forEach(function(dotData){
       var $dot = dotData.$dot;
       $dot.css({
-        transform: 'translate3D('+halfWidth+','+halfHeight+','+fiftyPercent+') rotateY('+currentRotation+'deg) translate3D('+(dotData.dotX)+'px,'+(dotData.dotY)+'px,'+(dotData.dotZ)+'px) rotateY('+(-currentRotation)+'deg)',
+        transform: 'translate3D('+halfWidth+','+halfHeight+',-'+fiftyPercent+') rotateY('+(-currentRotation)+'deg) translate3D('+(dotData.dotX)+'px,'+(dotData.dotY)+'px,'+(dotData.dotZ)+'px) rotateY('+(currentRotation)+'deg)',
         transition: 'all 1s'
       });
     });
