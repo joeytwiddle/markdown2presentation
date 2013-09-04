@@ -7,8 +7,8 @@ var pointingLeft, pointingRight, pointingFront;
 function recalcTransforms() {
   var fiftyPercent = Math.round(window.innerWidth / 2) + 'px';
   pointingRight = 'translateZ(-'+fiftyPercent+') rotateY(+90deg) translateZ(+'+fiftyPercent+')';
-  pointingLeft = 'translateZ(-'+fiftyPercent+') rotateY(-90deg) translateZ(+'+fiftyPercent+')';
-  pointingFront = 'translateZ(-'+fiftyPercent+') rotateY(0deg) translateZ(+'+fiftyPercent+')';
+  pointingLeft  = 'translateZ(-'+fiftyPercent+') rotateY(-90deg) translateZ(+'+fiftyPercent+')';
+  pointingFront = 'translateZ(-'+fiftyPercent+') rotateY(0deg)   translateZ(+'+fiftyPercent+')';
 }
 recalcTransforms();
 $(window).on('resize',recalcTransforms);

@@ -231,7 +231,7 @@ If we are animating a `<circle>` then we will need to wrap it in a `<g>`.  Set t
 <script src='reusable_slider.js'></script>
 <link rel="stylesheet" href='cube_slider.css'></link>
 <script src='cube_slider.js'></script>
-<!-- <div id='dots'></div> -->
+<div id='dots'></div>
 <link rel="stylesheet" href='dotfield.css'></link>
 <script src='dotfield.js'></script>
 

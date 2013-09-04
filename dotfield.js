@@ -5,10 +5,11 @@ $(document).ready(function() {
   var namespace = "http://www.w3.org/2000/svg";
 
   var $dotsContainer = $(document.createElementNS(namespace,"svg"));
-  $dotsContainer.attr('id','dots');
-  $dotsContainer.css({
+  //$dotsContainer.attr('id','dots');
+  //$dotsContainer.addClass('dots-container');
+  //$dotsContainer.css({
     //"transform-style": "preserve-3d"
-  })
+  //})
 
   var dotSize = window.innerWidth / 250;
 
@@ -49,8 +50,9 @@ $(document).ready(function() {
     $dotsContainer.append($dot);
   }
 
-  //$('#dots').append($dotsContainer);
-  $('body').append($dotsContainer);
+  $('#dots').append($dotsContainer);
+  //$('body').append($dotsContainer);
+  $("body").append("#dots");
 
   //var $allDots = $dotsContainer.find('circle');
 
