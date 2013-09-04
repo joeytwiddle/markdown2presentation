@@ -12,23 +12,29 @@ $(document).ready(function() {
     //"transform-style": "preserve-3d"
   //})
 
-  var dotSize = window.innerWidth / 250;
+  var dotSize = window.innerWidth / 250 * 5;
 
   var dotsData = [];
 
   for (var i=0;i<numDots;i++) {
 
     var dotX = window.innerWidth * (Math.random() - 0.5);
-    var dotY = window.innerHeight * (Math.random() - 0.5);
+    var dotY = 0; // window.innerHeight * (Math.random() - 0.5);
     var depth = Math.random();
     var dotZ = window.innerWidth * (depth - 0.5);
     var hue = 360 * depth;
 
-    //var $dot = $(document.createElementNS(namespace,"circle"))
-    //.attr("cx",0)
-    //.attr("cy",0)
-    //.attr("r",dotSize);
-    var $dot = $("<div>(O)</div>");
+    var $circle = $(document.createElementNS(namespace,"circle"))
+    .attr("cx",dotSize/2)
+    .attr("cy",dotSize/2)
+    .attr("r",dotSize/2);
+    //var $dot = $("<div>(O)</div>");
+    var $dot = $("<div>");
+    var $dotSVG = $(document.createElementNS(namespace,"svg"))
+      .width(dotSize)
+      .height(dotSize);
+    $dotSVG.append($circle);
+    $dot.append($dotSVG);
 
     $dot.css({
       //transform: 'translateX('+dotX+'px) translateY('+dotY+'px) translateZ('+dotZ+'px)'
@@ -81,7 +87,7 @@ $(document).ready(function() {
     dotsData.forEach(function(dotData){
       var $dot = dotData.$dot;
       $dot.css({
-        transform: 'translate3D('+halfWidth+','+halfHeight+',-'+fiftyPercent+') rotateY('+(-currentRotation)+'deg) translate3D('+(dotData.dotX)+'px,'+(dotData.dotY)+'px,'+(dotData.dotZ)+'px) rotateY('+(currentRotation)+'deg)',
+        transform: 'translate3D('+halfWidth+','+0+'px,-'+fiftyPercent+') rotateY('+(-currentRotation)+'deg) translate3D('+(dotData.dotX)+'px,'+(dotData.dotY)+'px,'+(dotData.dotZ)+'px) rotateY('+(currentRotation)+'deg)',
         transition: 'all 1s'
       });
     });
