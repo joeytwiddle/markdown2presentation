@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>trying_out_jquery</title>
+		<style>
+			/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* Generic styles */
+body {
+	background: #f5f5f5;
+  color: #222;
+  font-family: 'Palatino Linotype','Book Antiqua',Palatino,FreeSerif,serif;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6,
+ul, ol,
+p,
+code, pre,
+hr {
+	line-height: 1.5em;
+	margin: 1.5em 0 0.5em 0;
+}
+
+*:first-child {
+	margin-top: 0;
+}
+
+/* Headers */
+h1, h2, h3, h4, h5, h6 {
+	font-weight: bold;
+}
+
+h1 {
+	font-size: 3.5em;
+}
+
+h2 {
+	font-size: 2.5em;
+}
+
+h3 {
+	font-size: 2em;
+}
+
+h4 {
+	font-size: 1.5em
+}
+
+h5 {
+	font-size: 1.2em;
+}
+
+h6 {
+	font-size: 1em;
+}
+
+/* Lists */
+ul, ol {
+	padding-left: 2em;
+}
+
+ul {
+	list-style-type: disc;	
+}
+
+ol {
+	list-style-type: decimal;
+}
+
+/* Code and pre */
+code, pre {
+	font-family: "Bitstream Vera Sans Mono", "Courier", monospace;
+}
+code {
+	background: none repeat scroll 0 0 #F8F8FF;
+  border: 1px solid #DEDEDE;
+  border-radius: 3px 	;
+  padding: 0 0.2em;
+}
+pre {
+	border-left: 5px solid #eee;
+	margin-left: 2em;	
+	padding-left: 1em;
+}
+pre > code {
+	background: transparent;
+	border: none;
+	padding: 0;
+}
+
+/* Links */
+a {
+  color: #261A3B;
+}
+
+a:visited {
+  color: #261A3B;
+}
+
+/* Inlines */
+strong {
+	font-weight: bold;
+}
+
+em {
+	font-style: italic;
+}
+
+/* Container */
+.container {
+	background: #FFF;
+	padding: 30px 50px;
+	margin: 0 auto;
+	width: 850px;
+}
+
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<p><link rel="stylesheet" href='markdown_tweaks.css'></link></p>
+
+<p><style type="text/css">
+  html, body {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    background-image: radial-gradient(#b3d4fc,#0769AD);
+    /* background-image: radial-gradient(#b3d4fc,#000000); */
+  }
+</style></p>
+
+<h1>What do we use Javascript for?</h1>
+
+<h2>Manipulating the DOM</h2>
+
+<div style='display:none;'>
+<p>DOM</p>
+<p>Document Object Model.</p>
+</div>
+
+<p>Web pages were static before Javascript.</p>
+
+<p>The addition of Javascript allowed developers to make parts of the page move and change.</p>
+
+<p>This was initially called DHTML (D for dynamic).</p>
+
+<p>(Now CSS can provide some interactive behaviour alone.)</p>
+
+<h2>Processing</h2>
+
+<p>HTML can present information but it has no intelligence.  Javascript can perform calculations, to make the page appear smarter!</p>
+
+<h2>Network operations</h2>
+
+<p>Javascript allows us to communicate with a webserver, send and receive, without changing page.</p>
+
+<p>Techniques involving this became known as Ajax.</p>
+
+<h1>jQuery</h1>
+
+<h2>Why use jQuery?</h2>
+
+<p>The browser's DOM gives us control over everything on the page using Javascript.</p>
+
+<p>However it is not so friendly to use, and sometimes there are inconsistencies (IE).</p>
+
+<p>Many people write "convenience functions" to help make this easier.</p>
+
+<p>Some of these efforts have been bundled up into libraries.</p>
+
+<ul>
+<li>Dojo</li>
+<li>jQuery</li>
+<li>MooTools</li>
+<li>Prototype</li>
+<li>MyLibrary</li>
+<li>...</li>
+</ul>
+
+<p>jQuery is one of these libraries, and is quite popular.</p>
+
+<p>Even if it's not the best library, its popularity is an advantage because <em>everyone knows it</em>.</p>
+
+<h2>When NOT to use jQuery?</h2>
+
+<p>jQuery is not always efficient (depending how you use it).  It is quite small by modern standards (~90k minified) but it still costs CPU and memory when loaded into the browser.</p>
+
+<p>So it may not be appropriate if you want a very snappy website on mobiles or other low-power machines.</p>
+
+<h1>Getting started with jQuery!</h1>
+
+<p>Let's just play with it a little bit...</p>
+
+<p>The browser console lets us <em>try out</em> bits of Javascript without having to write a <code>script.js</code> file.  It is a great way to <em>experiment</em> with a new library.  When you have found some working code, you can copy it into a script.</p>
+
+<p>Visit your favourite webpage: <code>http://microsoft.com/</code></p>
+
+<p>Pop up your browser's console:</p>
+
+<ul>
+<li>Chromium: <code>&lt;Ctrl-Shift-J&gt;</code></li>
+<li>Firefox: <code>&lt;Ctrl-Shift-K&gt;</code></li>
+</ul>
+
+<p>Find an element in the Inspector.</p>
+
+<p>Split open the Console with <code>&lt;Escape&gt;</code>.  (Chrome only.)</p>
+
+<p>Note that the selected element has been automatically placed in the <code>$0</code> variable.  (This is <em>not</em> jQuery!)</p>
+
+<p>Now, can we find the element using jQuery's <code>$</code> selector?</p>
+
+<p>And manipulate it ... !</p>
+
+<pre><code>.hide();
+.show();
+
+.text();                    // To read the element's textContent
+.text("New Text");          // To write
+
+.css(&lt;property&gt;, &lt;value&gt;);
+.css('opacity', 0.5);       // For example
+</code></pre>
+
+<h1>An example</h1>
+
+<p>Visit <code>http://jquery.com/</code></p>
+
+<p>Visit the "API Documentation" page</p>
+
+<pre><code>$('.entry-title').css("background",'green');
+</code></pre>
+
+<h1>Adding some active behaviour:</h1>
+
+<p>First let's hide all the summaries:</p>
+
+<pre><code>$('.entry-summary').hide();
+</code></pre>
+
+<p>Now let's make each summary re-appear, when we hover over its title:</p>
+
+<pre><code>var $titles = $('.entry-title &gt; a');
+
+$titles.hover( function(){ $(this).closest('article').find('.entry-summary').show(); } );
+</code></pre>
+
+<p>What is this doing:</p>
+
+<ul>
+<li>The call to <code>hover()</code> says "run this function when the user hovers any of the titles".</li>
+<li>Inside the function, <code>$this</code> refers to the title which was clicked.</li>
+<li><code>closest</code> walks up the DOM tree, looking for an element of type <code>&lt;article&gt;</code>.</li>
+<li>Then <code>find</code> searches below the <code>&lt;article&gt;</code> for the summary element, and shows it.</li>
+</ul>
+
+<p>Here is an alternative, that will show on hover, hide on un-hover:</p>
+
+<pre><code>$titles.each(function(){
+  var $title = $(this);
+  var $summary = $title.closest('article').find('.entry-summary');
+  $title.hover($summary.show.bind($summary), $summary.hide.bind($summary));
+});
+</code></pre>
+
+<!-- Finally -->
+
+<script src='prefixfree.min.js'></script>
+
+<script src='jquery-1.10.2.min.js'></script>
+
+<script src='replace_codes_with_pres.js'></script>
+
+<script src='group_into_slides.js'></script>
+
+<script src='reusable_slider.js'></script>
+
+<p><link rel="stylesheet" href='cube_slider.css'></link></p>
+
+<script src='cube_slider.js'></script>
+
+<div id='dots'></div>
+
+<p><link rel="stylesheet" href='dotfield.css'></link></p>
+
+<script src='dotfield.js'></script>
+		</div>
+
+		<script></script>
+	</body>
+</html>

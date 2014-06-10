@@ -299,8 +299,8 @@ javascript:if(document.styleSheets.length&gt;0){css=!document.styleSheets[0].dis
 <li>Set up a message to appear in 15 minutes:</li>
 </ul>
 
-<p><code>javascript
-    setTimeout( function(){ alert("YoU hAve bEeN hAxx0rreD bY eCmaNinJa!"); }, 1000*60*15 );
+<p><code>
+setTimeout( function(){ alert("YoU hAve bEeN hAxx0rreD bY eCmaNinJa!"); }, 1000*60*15 );
 </code></p>
 
 <ul>
@@ -467,9 +467,9 @@ function animate(elem, prop, startVal, endVal, duration) {
   }
   doFrame();
 }
-
-// Base position on time, always in the right place.
 </code></pre>
+
+<p>Calculate your position based on the current time, and you will always be in the right place.</p>
 
 <h1>Using &amp;&amp; instead of if</h1>
 
@@ -529,7 +529,6 @@ Second-order functions are functions which operate on other functions.  Wanna se
 <h2>once</h2>
 
 <pre><code>function once(fn) {
-
   var done = false;
 
   return function(){
@@ -538,8 +537,16 @@ Second-order functions are functions which operate on other functions.  Wanna se
       done = true;
     }
   };
-
 }
+</code></pre>
+
+<p>Example usage:</p>
+
+<pre><code>function showMessage() {
+  alert("You have clicked on the window.");
+}
+
+$(window).click( once( showMessage ) );
 </code></pre>
 
 <h2>The cache pattern</h2>

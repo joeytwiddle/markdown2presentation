@@ -176,8 +176,8 @@ em {
     width: 100%;
     height: 100%;
     box-sizing: border-box;
-    background-image: -webkit-radial-gradient(top,farthest-side circle,hsl(30,80%,50%),hsl(0,80%,50%));
-    background-image: radial-gradient(farthest-side circle at top,hsl(30,80%,50%),hsl(0,80%,50%));
+    background-image: -webkit-radial-gradient(center,farthest-side circle,hsl(30,80%,50%),hsl(0,80%,50%));
+    background-image: radial-gradient(farthest-side circle at center,hsl(30,80%,50%),hsl(0,80%,50%));
   }
 </style></p>
 
@@ -228,28 +228,41 @@ em {
 
 <p><a href="http://www.uselesspickles.com/triangles/demo.html">Triangles</a>!</p>
 
+<h2>Canvas</h2>
+
+<ul>
+<li>Slow in theory, but relatively fast these days.</li>
+<li>Pretty well supported in all the respectable browsers.</li>
+</ul>
+
 <h2>Animating SVGs</h2>
 
 <ul>
 <li><code>&lt;circle&gt;</code></li>
-<li><code>&lt;triangle&gt;</code></li>
+<li><code>&lt;polygon&gt;</code></li>
 <li><code>&lt;rect&gt;</code></li>
 <li>Full <code>&lt;svg&gt;</code> imported from Illustrator/Inkscape/svgedit/Piktochart</li>
 </ul>
 
-<h2>Canvas</h2>
-
-<ul>
-<li>Slow in theory, fast in practice!</li>
-</ul>
-
 <h2>WebGL and ... GLshaders?</h2>
+
+<p><a href="http://www.shadertoy.com">Shader Toy</a></p>
 
 <h1>Options</h1>
 
 <p>What technology is available for animation?</p>
 
 <h2>jQuery.animate</h2>
+
+<p>Example:</p>
+
+<p><code>javascript
+$("#ball").animate({
+    top:   '200px',
+    left:  '400px',
+    color: 'green'
+}, 1500, "bounce", callback);
+</code></p>
 
 <p>Advantages:</p>
 
@@ -270,14 +283,14 @@ em {
 <p>Advantages:</p>
 
 <ul>
-<li>Can interpolate </li>
+<li>Can interpolate <em>attributes</em>, so it can change the shape of SVG elements!</li>
 </ul>
 
 <h2>Raphael</h2>
 
 <p>...</p>
 
-<h2>CSS transform!</h2>
+<h2>CSS3 transforms</h2>
 
 <p>...</p>
 
@@ -407,6 +420,54 @@ Example: <code>(x,y) = (x0,y0) + t * (u0,v0)</code></li>
 <p>Two separate transforms, requires two separate elements.</p>
 
 <p>If we are animating a <code>&lt;circle&gt;</code> then we will need to wrap it in a <code>&lt;g&gt;</code>.  Set the x transform on one and the y transform on the other.</p>
+
+<h1>What I learned</h1>
+
+<h1>Slides</h1>
+
+<ul>
+<li>You can apply a new animated transform while one is still running, great!</li>
+</ul>
+
+<p>But you cannot <em>set</em> the transform to its start position, and then ask it to animate to a new position, all during one frame.  For that you need to use keyframes...</p>
+
+<p>So I had to place all the slides in position at the start, and leave them in position after they have moved.</p>
+
+<ul>
+<li>When undoing <code>display:none</code> the transform in not always clearnly applied in all browsers.</li>
+</ul>
+
+<p>Therefore I ended up using <code>opacity:0</code> on hidden slides.</p>
+
+<ul>
+<li>Creating an artificial origin by: pulling, rotating, pushing.</li>
+</ul>
+
+<h1>Fireworks</h1>
+
+<p><a href="http://www.w3.org/TR/css3-animations/">W3C CSS3 Animation Specs</a></p>
+
+<p>I wanted to re-use individual SVG <code>&lt;polygon&gt;</code>s, rather than re-creating them each time.  (Something like using a "pool".)</p>
+
+<p>I thought I would try to use transforms exclusively, rather than editing the attributes of each triangle.</p>
+
+<p>So to start a new flare animating, as mentioned before, I cannot set its transform, and then request it animate to a new transform.  Instead I must use keyframes.</p>
+
+<p>I did not find a way to create inline anonymous keyframe animations, so I went and created actual CSS strings, using the <code>keyframes.js</code> library.  Each keyframe animation was named, and each element was pointed to its own unique keyframe animation.</p>
+
+<ul>
+<li>When it came time to adjust the settings of a keyframe and re-trigger it, Firefox kept on using the initial keyframe settings.  The fireworks never left the ground!</li>
+</ul>
+
+<p>After spending some time trying to fix that, I just opted for an easy workaround: have two keyframe animations for each flare, and switch between them.  Firefox had no trouble updating to the fresh values.</p>
+
+<h1>Dots (or "bubbles")</h1>
+
+<ul>
+<li>Whilst CSS3 transforms can be applied to SVG components, the <code>perspective</code> property does not work!  It only works on HTML elements!</li>
+</ul>
+
+<p>I had to wrap every bubble in a <code>&lt;div&gt;</code>, and force each div into the (0,0) corner with <code>position:fixed; left:-8px; top:-8px;</code>.</p>
 
 <!-- Finally -->
 

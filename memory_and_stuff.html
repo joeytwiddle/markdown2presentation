@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>memory_and_stuff</title>
+		<style>
+			/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* Generic styles */
+body {
+	background: #f5f5f5;
+  color: #222;
+  font-family: 'Palatino Linotype','Book Antiqua',Palatino,FreeSerif,serif;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6,
+ul, ol,
+p,
+code, pre,
+hr {
+	line-height: 1.5em;
+	margin: 1.5em 0 0.5em 0;
+}
+
+*:first-child {
+	margin-top: 0;
+}
+
+/* Headers */
+h1, h2, h3, h4, h5, h6 {
+	font-weight: bold;
+}
+
+h1 {
+	font-size: 3.5em;
+}
+
+h2 {
+	font-size: 2.5em;
+}
+
+h3 {
+	font-size: 2em;
+}
+
+h4 {
+	font-size: 1.5em
+}
+
+h5 {
+	font-size: 1.2em;
+}
+
+h6 {
+	font-size: 1em;
+}
+
+/* Lists */
+ul, ol {
+	padding-left: 2em;
+}
+
+ul {
+	list-style-type: disc;	
+}
+
+ol {
+	list-style-type: decimal;
+}
+
+/* Code and pre */
+code, pre {
+	font-family: "Bitstream Vera Sans Mono", "Courier", monospace;
+}
+code {
+	background: none repeat scroll 0 0 #F8F8FF;
+  border: 1px solid #DEDEDE;
+  border-radius: 3px 	;
+  padding: 0 0.2em;
+}
+pre {
+	border-left: 5px solid #eee;
+	margin-left: 2em;	
+	padding-left: 1em;
+}
+pre > code {
+	background: transparent;
+	border: none;
+	padding: 0;
+}
+
+/* Links */
+a {
+  color: #261A3B;
+}
+
+a:visited {
+  color: #261A3B;
+}
+
+/* Inlines */
+strong {
+	font-weight: bold;
+}
+
+em {
+	font-style: italic;
+}
+
+/* Container */
+.container {
+	background: #FFF;
+	padding: 30px 50px;
+	margin: 0 auto;
+	width: 850px;
+}
+
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<p><link rel="stylesheet" href='markdown_tweaks.css'></link></p>
+
+<p><style type="text/css">
+  html, body {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    background-image: -webkit-radial-gradient(center,farthest-side circle,hsl(30,80%,50%),hsl(0,80%,50%));
+    background-image: radial-gradient(farthest-side circle at center,hsl(30,80%,50%),hsl(0,80%,50%));
+  }
+</style></p>
+
+<h1>Callback functions in Javascript</h1>
+
+<pre><code>$.get('/news.json', function(news){
+});
+</code></pre>
+
+<h1>Memory allocation and memory pointers</h1>
+
+<ul>
+<li>Memory allocation</li>
+<li>Pointers (references)</li>
+<li>Memory cleanup.  Reclaims memory for re-use later (de-allocation)</li>
+</ul>
+
+<h1>Garbage collection</h1>
+
+<p>Older languages (e.g. C) require developers clean up memory when data is no longer needed (e.g. using <code>delete</code> keyword).  If this is not done properly, slow or fast memory leaks can occur.</p>
+
+<p>That means the developer must keep track of which pieces of data are still referenced by parts of the application, and which are no longer being pointed to.</p>
+
+<p>Some later languages added an alternative: garbage collection (GC).</p>
+
+<p>In languages with garbage collection, the interpreter or engine knows what parts of memory are pointing at other parts of memory.  When a piece of data is <em>no longer being pointed at</em> by the application, then it is not needed, and the memory can be reclaimed.</p>
+
+<p>Early garbage collectors run occasionally.
+- Slow, freeze, jitter
+- Saw-shaped</p>
+
+<p>Modern garbage collectors run much more frequently
+- Forgot the name for this
+- Using frames?
+- Also, reference counting can be used (overhead)</p>
+
+<h1>Scopes and Closures in Javascript</h1>
+
+<!-- Finally -->
+
+<script src='prefixfree.min.js'></script>
+
+<script src='jquery-1.10.2.min.js'></script>
+
+<script src='replace_codes_with_pres.js'></script>
+
+<script src='group_into_slides.js'></script>
+
+<!-- Anything above group_into_slides will end up in a slide; itself in the last one. -->
+
+<script src='reusable_slider.js'></script>
+
+<p><link rel="stylesheet" href='cube_slider.css'></link></p>
+
+<script src='cube_slider.js'></script>
+
+<div id='dots'></div>
+
+<p><link rel="stylesheet" href='dotfield.css'></link></p>
+
+<script src='dotfield.js'></script>
+		</div>
+
+		<script></script>
+	</body>
+</html>

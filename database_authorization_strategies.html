@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>database_authorization_strategies</title>
+		<style>
+			/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* Generic styles */
+body {
+	background: #f5f5f5;
+  color: #222;
+  font-family: 'Palatino Linotype','Book Antiqua',Palatino,FreeSerif,serif;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6,
+ul, ol,
+p,
+code, pre,
+hr {
+	line-height: 1.5em;
+	margin: 1.5em 0 0.5em 0;
+}
+
+*:first-child {
+	margin-top: 0;
+}
+
+/* Headers */
+h1, h2, h3, h4, h5, h6 {
+	font-weight: bold;
+}
+
+h1 {
+	font-size: 3.5em;
+}
+
+h2 {
+	font-size: 2.5em;
+}
+
+h3 {
+	font-size: 2em;
+}
+
+h4 {
+	font-size: 1.5em
+}
+
+h5 {
+	font-size: 1.2em;
+}
+
+h6 {
+	font-size: 1em;
+}
+
+/* Lists */
+ul, ol {
+	padding-left: 2em;
+}
+
+ul {
+	list-style-type: disc;	
+}
+
+ol {
+	list-style-type: decimal;
+}
+
+/* Code and pre */
+code, pre {
+	font-family: "Bitstream Vera Sans Mono", "Courier", monospace;
+}
+code {
+	background: none repeat scroll 0 0 #F8F8FF;
+  border: 1px solid #DEDEDE;
+  border-radius: 3px 	;
+  padding: 0 0.2em;
+}
+pre {
+	border-left: 5px solid #eee;
+	margin-left: 2em;	
+	padding-left: 1em;
+}
+pre > code {
+	background: transparent;
+	border: none;
+	padding: 0;
+}
+
+/* Links */
+a {
+  color: #261A3B;
+}
+
+a:visited {
+  color: #261A3B;
+}
+
+/* Inlines */
+strong {
+	font-weight: bold;
+}
+
+em {
+	font-style: italic;
+}
+
+/* Container */
+.container {
+	background: #FFF;
+	padding: 30px 50px;
+	margin: 0 auto;
+	width: 850px;
+}
+
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<p><link rel="stylesheet" href='markdown_tweaks.css'></link></p>
+
+<p><style type="text/css">
+  html, body {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    background-image: -webkit-radial-gradient(center,farthest-side circle,hsl(290,80%,50%),hsl(210,80%,50%));
+    background-image: radial-gradient(farthest-side circle at center,hsl(290,80%,50%),hsl(210,80%,50%));
+  }
+</style></p>
+
+<h1>Keeping data secure within your web-app</h1>
+
+<p>Your web-app has a lot of data, and different users can access and modify different bits of that data.</p>
+
+<p>How are you going to handle that issue?</p>
+
+<p><em>Is the user authorized to take this action?</em></p>
+
+<p>Options:</p>
+
+<ol>
+<li>Decide in the browser ... nope!</li>
+<li>At the route level, before controllers are called</li>
+<li>Inside the controller / request handler</li>
+<li>Convenience methods (e.g. on the models) for the controllers to use</li>
+<li>A layer above the database</li>
+</ol>
+
+<h1>Option 1</h1>
+
+<p>If you let your client-side code make important decisions about security ...</p>
+
+<p>you're going to have a bad time.</p>
+
+<h1>Option 2</h1>
+
+<p>A request comes in to a route.  Before the request is passed to the controller, our security layer performs a check to see if this request should be allowed.</p>
+
+<p><em>Is the user requesting something they are allowed to do?</em></p>
+
+<p>Advantages:</p>
+
+<ul>
+<li>All your security concerns are addressed in one layer.  It makes it clear and easy to audit.</li>
+<li>(It is clear which routes have checks, and for those which do, it should be clear what those checks are.)</li>
+<li>Controllers do not have to worry about security.  Once they are called, they can go ahead and do their work without concern.</li>
+</ul>
+
+<p>Disadvantages:</p>
+
+<ul>
+<li>The security checks are quite separate from the sensitive actions.</li>
+<li>If a controller is changed/expanded, the developer might forget to update its parent security check.</li>
+<li>Depending on design, the security check may need to perform DB lookups in order to make its decision.  Then the controller may need to perform some of the same queries, in order to perform its task.  This would be inefficient!</li>
+</ul>
+
+<p>Conclusion:</p>
+
+<ul>
+<li>This might work ok if your routes are very well specified, simple, and unlikely to change.</li>
+</ul>
+
+<h1>Option 3 - Inside the controllers</h1>
+
+<p>This is probably the de-facto choice that a web-developer will make.</p>
+
+<p>When processing a request, before taking an action, first check that the action is valid.</p>
+
+<pre><code># Only original author or forum moderator can delete a post
+if @post.try(:is_author?, current_user)
+   || @post.parent_forum.try(:is_moderator, current_user)
+        delete @post
+end
+</code></pre>
+
+<p>Advantages:</p>
+
+<ul>
+<li>Logic is close to action.  They can be understood and considered together.</li>
+</ul>
+
+<p>Disadvantages:</p>
+
+<ul>
+<li>There is a danger of repetition here.  We may be performing similar security checks for different actions.  For example, deleting a post and editing a post might require the same criteria.  This can be addressed by refactoring the decision out into a convenience function.  (In this case 'checkIsAuthorOrModerator' or 'checkCanManipulatePost' depending how you want to express the logic.)</li>
+<li>This is less structured than other approaches.  The security concerns do not appear all in one place, but spread out across the controllers, mixed in with the actions.</li>
+<li>A developer might forget the security check.  Because the check appears inline in the code, a security audit requires looking through the code of every controller, rather than just looking at one security layer.</li>
+<li>We are still accessing DB records directly, we are not forcing the developer to think or code securely.</li>
+</ul>
+
+<h1>Option 4 - Inside the route controller but with a better structure</h1>
+
+<p>The idea here is to access database records through a layer that makes it easier to express security checks.</p>
+
+<p>Instead of accessing database records directly, we only allow the developer to access records through one of the authority figures.  (In our example, these are Users and Moderators.)</p>
+
+<p>Functions for accessing sensitive data, or for modifying sensitive data, are made available on the User and Moderator models.</p>
+
+<p>So in order to access a record, or update a record, the developer must call a "convenience" function of the current user.</p>
+
+<p>The convenience functions would only return or modify records if the context user/authority really does have authority to do so.</p>
+
+<pre><code>current_user.getPrivateMessage(@message_id)
+
+current_user.getPhoneNumberFor(@friend_id)
+
+current_user.deletePost(post_id)
+</code></pre>
+
+<p>Advantages:</p>
+
+<ul>
+<li>We are still perform security checks in the controller, but they are more neatly encapsulated.</li>
+<li>In fact all the security concerns/rules are specified within the convenience functions, within the models of the entities which hold authority/roles in the system.</li>
+</ul>
+
+<p>Disadvantages:</p>
+
+<ul>
+<li>The number of convenience functions on the models may grow quite large.</li>
+<li>It will only <em>force</em> the developer to code securely if he really doesn't have any other way to access data records.</li>
+</ul>
+
+<h1>Option 5 - A layer of roles and permissions over the database</h1>
+
+<p>Data is accessed via the layer.</p>
+
+<p>Entities (users) will have various different roles with respect to a given record.  (For example "author"/"owner", "moderator", "public"/"other")</p>
+
+<p>For each field (column) in a schema (table), permissions are specified to describe which roles have access to read or write to that field for any given record.</p>
+
+<p>When a read or write request is made by a user on a specific record (or when creating a new record):</p>
+
+<ul>
+<li>The roles that the user has with respect to that record are resolved</li>
+<li>Each involved field is checked to see if one of the roles grants the user with permission to perform the requested operation.</li>
+<li>If all of the conditions are satisfied, the operation is performed, otherwise it is rejected.</li>
+</ul>
+
+<p>Advantages:</p>
+
+<ul>
+<li>All security concerns are in one layer.  Audits are clear.  Controllers are free to perform their logic, leaving security to be handled elsewhere.</li>
+<li>Permissions can be very fine-grained.  (E.g. per-field read permissions may differ slightly between "moderators" and "authors", or update permissions may differ between "site-wide admins" and "forum moderators".)</li>
+</ul>
+
+<p>Disadvantages:</p>
+
+<ul>
+<li>Security concerns are entirely separated from the actions which perform them.  This can make it harder to reason about what permissions are actually needed for the app to function!  (Especially in the presence of a large number of different roles, fields, etc.)</li>
+<li>Complexity: It must deal not only with reading and writing fields, but also creating new records and deleting existing records, perhaps based on the forum or comment thread in which they are being added/removed.</li>
+</ul>
+
+<h1>Other concerns - Breaking up tables</h1>
+
+<p>It is worth considering breaking up data of different sensitivity levels held for a particular entity into separate tables/schemas.  This is especially important if your framework does not allow partial records to be returned.</p>
+
+<p>For example a user may have public information:</p>
+
+<ul>
+<li>username</li>
+<li>profile pic</li>
+<li>bio / description</li>
+</ul>
+
+<p>and private information:</p>
+
+<ul>
+<li>email address</li>
+<li>address, telephone</li>
+<li>hashed password, security question</li>
+</ul>
+
+<p>It is advisable to store these two sets of data in different tables.  The benefits are:</p>
+
+<ul>
+<li>A vulnerability/leak in one part of the system might not allow access to sensitive data from another area.</li>
+<li>The authority to access sensitive data can be made available to fewer company employees than public data.  This enhances security.</li>
+<li>European law somewhat implies you should take this approach.</li>
+</ul>
+
+<p>In SQL systems you could achieve this using <em>views</em> on a single table rather than actually splitting the table into two (which implies redundancy and denormalization).</p>
+
+<!-- Finally -->
+
+<script src='prefixfree.min.js'></script>
+
+<script src='jquery-1.10.2.min.js'></script>
+
+<script src='replace_codes_with_pres.js'></script>
+
+<script src='group_into_slides.js'></script>
+
+<!-- Anything above group_into_slides will end up in a slide; itself in the last one. -->
+
+<script src='reusable_slider.js'></script>
+
+<p><link rel="stylesheet" href='cube_slider.css'></link></p>
+
+<script src='cube_slider.js'></script>
+
+<div id='dots'></div>
+
+<p><link rel="stylesheet" href='dotfield.css'></link></p>
+
+<script src='dotfield.js'></script>
+		</div>
+
+		<script></script>
+	</body>
+</html>
