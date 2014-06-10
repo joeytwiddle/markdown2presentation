@@ -13,16 +13,25 @@ $(document).ready(function() {
   //})
 
   var dotSize = window.innerWidth / 250 * 5;
+  var divSize = 2*Math.ceil(dotSize/2);
 
   var dotsData = [];
 
   for (var i=0;i<numDots;i++) {
 
-    var dotX = window.innerWidth * (Math.random() - 0.5);
-    var dotY = 0; // window.innerHeight * (Math.random() - 0.5);
-    var depth = Math.random();
-    var dotZ = window.innerWidth * (depth - 0.5);
-    var hue = 360 * depth;
+    //var maxRadius = (window.innerWidth/2) * 80/100;
+    var maxRadius = (window.innerWidth/2) * 1.0;
+    // Make a random vector
+    var dotX = (Math.random() - 0.5);
+    var dotY = (Math.random() - 0.5);
+    var dotZ = (Math.random() - 0.5);
+    // Normalise it:
+    var mag = Math.sqrt(dotX*dotX + dotY*dotY + dotZ*dotZ);
+    dotX /= mag;  dotY /= mag;  dotZ /= mag;
+    // Scale it up
+    var radius = Math.pow(Math.random(), 1/3) * maxRadius;
+    dotX *= radius;  dotY *= radius;  dotZ *= radius;
+    var hue = 360 * Math.random();
 
     var $circle = $(document.createElementNS(namespace,"circle"))
     .attr("cx",dotSize/2)
@@ -31,8 +40,8 @@ $(document).ready(function() {
     //var $dot = $("<div>(O)</div>");
     var $dot = $("<div>");
     var $dotSVG = $(document.createElementNS(namespace,"svg"))
-      .width(dotSize)
-      .height(dotSize);
+      .width(divSize)
+      .height(divSize);
     $dotSVG.append($circle);
     $dot.append($dotSVG);
 
@@ -40,6 +49,9 @@ $(document).ready(function() {
       //transform: 'translateX('+dotX+'px) translateY('+dotY+'px) translateZ('+dotZ+'px)'
       //transform: 'translateZ('+dotZ+'px)',
       //"transform-style": "preserve-3d"
+      position: "fixed",
+      left: (-divSize/2)+'px',
+      top: (-divSize/2)+'px'
     });
 
     //var hue = 360 * Math.random() | 0;
@@ -60,34 +72,46 @@ $(document).ready(function() {
 
   $('#dots').append($dotsContainer);
   //$('body').append($dotsContainer);
-  $("body").append("#dots");
+  // If we move #dots outside the content, the dots always appear in front of the slides (in Chrome)
+  // TODO: However, if we don't move #dots into the body, then they expand the scroll area in Firefox!
+  //$("body").append($("#dots"));
 
   //var $allDots = $dotsContainer.find('circle');
 
   var currentRotation = 0;
 
   var super_animateSlideNext = Slider.animateSlideNext;
-  Slider.animateSlideNext = function() {
+  Slider.animateSlideNext = function(fromSlide, toSlide) {
     super_animateSlideNext.apply(this, arguments);
     currentRotation += 90;
-    transformTheDots();
+    transformTheDots(toSlide);
   };
 
   var super_animateSlidePrev = Slider.animateSlidePrev;
-  Slider.animateSlidePrev = function() {
+  Slider.animateSlidePrev = function(fromSlide, toSlide) {
     super_animateSlidePrev.apply(this, arguments);
     currentRotation -= 90;
-    transformTheDots();
+    transformTheDots(toSlide);
   };
 
-  function transformTheDots() {
+  function transformTheDots(toSlide) {
     var fiftyPercent = Math.round(window.innerWidth / 2) + 'px';
     var halfWidth = Math.round(window.innerWidth / 2) + 'px';
     var halfHeight = Math.round(window.innerHeight / 2) + 'px';
+    toSlide = toSlide || Slider.currentSlide;
+    var thru = Slider.allSlides.index(toSlide) / Slider.allSlides.length;
+    console.log(Slider.allSlides.index(toSlide), Slider.allSlides.length);
+    //var scale = 1.0 + 2.0 * thru;
+    var scale = 0.2 + 2.8 * thru;
     dotsData.forEach(function(dotData){
       var $dot = dotData.$dot;
       $dot.css({
-        transform: 'translate3D('+halfWidth+','+0+'px,-'+fiftyPercent+') rotateY('+(-currentRotation)+'deg) translate3D('+(dotData.dotX)+'px,'+(dotData.dotY)+'px,'+(dotData.dotZ)+'px) rotateY('+(currentRotation)+'deg)',
+        transform:
+            'translate3D('+halfWidth+','+halfHeight+',-'+fiftyPercent+')'
+          + 'scale('+scale+')'
+          + 'rotateY('+(-currentRotation)+'deg)'
+          + 'translate3D('+(dotData.dotX)+'px,'+(dotData.dotY)+'px,'+(dotData.dotZ)+'px)'
+          + 'rotateY('+(currentRotation)+'deg)',
         transition: 'all 1s'
       });
     });
