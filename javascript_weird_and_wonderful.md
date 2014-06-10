@@ -122,8 +122,8 @@ javascript:if(document.styleSheets.length>0){css=!document.styleSheets[0].disabl
   - Hit F12 to bring up the Javascript console.
   - Set up a message to appear in 15 minutes:
 
-```javascript
-    setTimeout( function(){ alert("YoU hAve bEeN hAxx0rreD bY eCmaNinJa!"); }, 1000*60*15 );
+```
+setTimeout( function(){ alert("YoU hAve bEeN hAxx0rreD bY eCmaNinJa!"); }, 1000*60*15 );
 ```
 
   - Switch back to the tag they were on.
@@ -290,7 +290,7 @@ for (var i=0;i<names.length;i++) {
       doFrame();
     }
 
-    // Base position on time, always in the right place.
+Calculate your position based on the current time, and you will always be in the right place.
 
 
 
@@ -350,7 +350,6 @@ Second-order functions are functions which operate on other functions.  Wanna se
 ## once
 
     function once(fn) {
-
       var done = false;
 
       return function(){
@@ -359,8 +358,15 @@ Second-order functions are functions which operate on other functions.  Wanna se
           done = true;
         }
       };
-
     }
+
+Example usage:
+
+    function showMessage() {
+      alert("You have clicked on the window.");
+    }
+
+    $(window).click( once( showMessage ) );
 
 
 ## The cache pattern
