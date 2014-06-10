@@ -14,10 +14,10 @@ $(document).ready(function() {
   $("body").keydown(function(event){
     //console.log("keypress event:",event);
     if (event.keyCode == 39) {
-      event.preventDefault();
+      //event.preventDefault();
       Slider.slideRight();
     } else if (event.keyCode == 37) {
-      event.preventDefault();
+      //event.preventDefault();
       Slider.slideLeft();
     }
   });
