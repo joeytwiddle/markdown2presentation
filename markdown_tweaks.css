@@ -4,6 +4,9 @@ pre {
   font-weight: bold;
   white-space: pre-wrap;
   padding: 0.6em 1.2em;
+  /* Just override markdown-html's defaults. */
+  border-left: 0px;
+  margin-left: 0em;
 }
 
 code {
