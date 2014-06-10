@@ -5,8 +5,8 @@
     width: 100%;
     height: 100%;
     box-sizing: border-box;
-    background-image: -webkit-radial-gradient(top,farthest-side circle,hsl(30,80%,50%),hsl(0,80%,50%));
-    background-image: radial-gradient(farthest-side circle at top,hsl(30,80%,50%),hsl(0,80%,50%));
+    background-image: -webkit-radial-gradient(center,farthest-side circle,hsl(30,80%,50%),hsl(0,80%,50%));
+    background-image: radial-gradient(farthest-side circle at center,hsl(30,80%,50%),hsl(0,80%,50%));
   }
 </style>
 
@@ -53,18 +53,21 @@ Limited.
 
 [Triangles](http://www.uselesspickles.com/triangles/demo.html)!
 
+## Canvas
+
+- Slow in theory, but relatively fast these days.
+- Pretty well supported in all the respectable browsers.
+
 ## Animating SVGs
 
 - `<circle>`
-- `<triangle>`
+- `<polygon>`
 - `<rect>`
 - Full `<svg>` imported from Illustrator/Inkscape/svgedit/Piktochart
 
-## Canvas
-
-- Slow in theory, fast in practice!
-
 ## WebGL and ... GLshaders?
+
+[Shader Toy](http://www.shadertoy.com)
 
 
 
@@ -73,6 +76,16 @@ Limited.
 What technology is available for animation?
 
 ## jQuery.animate
+
+Example:
+
+```javascript
+$("#ball").animate({
+    top:   '200px',
+    left:  '400px',
+    color: 'green'
+}, 1500, "bounce", callback);
+```
 
 Advantages:
 
@@ -88,13 +101,13 @@ Disadvantages:
 
 Advantages:
 
-- Can interpolate 
+- Can interpolate *attributes*, so it can change the shape of SVG elements!
 
 ## Raphael
 
 ...
 
-## CSS transform!
+## CSS3 transforms
 
 ...
 
@@ -219,6 +232,46 @@ Move Y in a Bezier curve that *looks like* a parabola.
 Two separate transforms, requires two separate elements.
 
 If we are animating a `<circle>` then we will need to wrap it in a `<g>`.  Set the x transform on one and the y transform on the other.
+
+
+
+# What I learned
+
+# Slides
+
+- You can apply a new animated transform while one is still running, great!
+
+But you cannot *set* the transform to its start position, and then ask it to animate to a new position, all during one frame.  For that you need to use keyframes...
+
+So I had to place all the slides in position at the start, and leave them in position after they have moved.
+
+- When undoing `display:none` the transform in not always clearnly applied in all browsers.
+
+Therefore I ended up using `opacity:0` on hidden slides.
+
+- Creating an artificial origin by: pulling, rotating, pushing.
+
+# Fireworks
+
+[W3C CSS3 Animation Specs](http://www.w3.org/TR/css3-animations/)
+
+I wanted to re-use individual SVG `<polygon>`s, rather than re-creating them each time.  (Something like using a "pool".)
+
+I thought I would try to use transforms exclusively, rather than editing the attributes of each triangle.
+
+So to start a new flare animating, as mentioned before, I cannot set its transform, and then request it animate to a new transform.  Instead I must use keyframes.
+
+I did not find a way to create inline anonymous keyframe animations, so I went and created actual CSS strings, using the `keyframes.js` library.  Each keyframe animation was named, and each element was pointed to its own unique keyframe animation.
+
+- When it came time to adjust the settings of a keyframe and re-trigger it, Firefox kept on using the initial keyframe settings.  The fireworks never left the ground!
+
+After spending some time trying to fix that, I just opted for an easy workaround: have two keyframe animations for each flare, and switch between them.  Firefox had no trouble updating to the fresh values.
+
+# Dots (or "bubbles")
+
+- Whilst CSS3 transforms can be applied to SVG components, the `perspective` property does not work!  It only works on HTML elements!
+
+I had to wrap every bubble in a `<div>`, and force each div into the (0,0) corner with `position:fixed; left:-8px; top:-8px;`.
 
 
 
