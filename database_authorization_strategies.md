@@ -113,6 +113,7 @@ Disadvantages:
 
 - The number of convenience functions on the models may grow quite large.
 - It will only *force* the developer to code securely if he really doesn't have any other way to access data records.
+- If we are still returning whole records, we don't have fine-grained control over access to specific fields.  (Although that can be addressed by splitting up documents/records which have fields with mixed levels of access.)
 
 
 

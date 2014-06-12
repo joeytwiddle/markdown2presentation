@@ -292,6 +292,7 @@ current_user.deletePost(post_id)
 <ul>
 <li>The number of convenience functions on the models may grow quite large.</li>
 <li>It will only <em>force</em> the developer to code securely if he really doesn't have any other way to access data records.</li>
+<li>If we are still returning whole records, we don't have fine-grained control over access to specific fields.  (Although that can be addressed by splitting up documents/records which have fields with mixed levels of access.)</li>
 </ul>
 
 <h1>Option 5 - A layer of roles and permissions over the database</h1>
