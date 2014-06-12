@@ -6,12 +6,12 @@ You can quickly turn a markdown document into a presentation.
 
 # Making a presentation from a markdown
 
-The current method is:
+The current method is too long:
 
 1. Find a presentation you like (by looking at the `.html` files in this folder).
 2. Open the `.md` file that corresponds to your favourite.
 3. Copy and paste the header and footer HTML from there into your own `.md` or `.txt` file.
-4. Edit the `make` file so that it will process your `.md` file and generate an `.html` file.
+4. Edit the `make` script so that it will process your `.md` file to generate an `.html` file.
 5. Run `./make`
 
 # TODOs
